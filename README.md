@@ -31,11 +31,19 @@ For every series in the export it queries TMDB and:
 - **Realigns seasons** — where TVDB and TMDB split seasons differently, it
   remaps episodes onto the TMDB structure, carrying the watch history over
   position by position, then healing by key.
+- **Splits lumped-together series** — if TV Time merged episodes from
+  different shows into a single entry (common with spin-offs/anime), orphan
+  episodes are resolved by their TVDB id and split out into their own,
+  correctly matched TMDB series.
 - **Never invents anything** — if TMDB knows fewer episodes than your export,
   the series is kept exactly as it was.
 - **Adds data** — each episode's air date (`air_date`) and the show's TMDB ID.
 - **Respects specials** — special seasons and specials stay separate from the
   regular count.
+- **Extracts movie specials** — some "specials" are actually feature films
+  (e.g. *"Blue Lock The Movie"*), recognizable by name and tied to the series
+  on TMDB; these are pulled out and moved to the movies output instead of
+  staying mixed in with the episodes.
 
 Movies get matched to TMDB too, gaining `tmdb_id` and a corrected
 `release_date`.
