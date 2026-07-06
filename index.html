@@ -116,7 +116,7 @@ const LOCALES = {
 }
 const T = {
   en: {
-    subtitle: 'Align your TV Time export with the TMDB catalog — fix broken numbering, add air dates and TMDB IDs, without ever losing a "watched". Everything runs in your browser: your files never leave your computer.',
+    subtitle: 'Align your TV Time export with the TMDB catalog, fixing the most common issues that cause missing episodes or wrong data while tracking: broken numbering, shows TV Time lumps into one that get split apart as on TMDB (e.g. Berlin, Monster), and special episodes that are actually movies (common with anime, e.g. Blue Lock) moved into the movies list. It also adds air dates and TMDB IDs, without ever losing a "watched". Everything runs in your browser: your files never leave your computer.',
     apiLabel: 'TMDB API key <span class="hint">— free at <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> (the short v3 key)</span>',
     apiHelpSummary: 'How do I get a TMDB API key?',
     apiHelpSteps: '<li>Create a free account on <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> and confirm it via the email they send you.</li><li>Signed in, open <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Settings → API</a>.</li><li>Click <b>Create</b> (or <b>Request an API key</b>) and pick <b>Developer</b>.</li><li>Accept the terms and fill the short form — for the app name/URL anything works (e.g. <code>personal use</code> and <code>http://localhost</code>).</li><li>Copy the value labeled <b>API Key (v3 auth)</b> — the short string — and paste it in the field above.</li>',
@@ -134,7 +134,7 @@ const T = {
     n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-tmdb-episodes', n_updated: 'updated', n_error: 'error', n_split: 'split',
   },
   it: {
-    subtitle: 'Allinea il tuo export di TV Time al catalogo TMDB — ripara numerazioni sballate, aggiunge date di uscita e ID TMDB, senza mai perdere un "visto". Tutto nel tuo browser: i file non lasciano il tuo computer.',
+    subtitle: 'Allinea il tuo export di TV Time al catalogo TMDB, sistemando i problemi più comuni che causano perdita di episodi o dati sbagliati durante il tracking: numerazioni sballate, serie che TV Time accorpa in una sola (es. Berlin, Monster) e vengono staccate come su TMDB, episodi speciali che sono in realtà film (comune negli anime, es. Blue Lock) spostati tra i film. Aggiunge anche date di uscita e ID TMDB, senza mai perdere un "visto". Tutto nel tuo browser: i file non lasciano il tuo computer.',
     apiLabel: 'API key TMDB <span class="hint">— gratuita da <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> (la key v3, quella corta)</span>',
     apiHelpSummary: 'Come ottengo una API key TMDB?',
     apiHelpSteps: '<li>Crea un account gratuito su <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> e confermalo dall\'email che ti inviano.</li><li>Da loggato, apri <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Impostazioni → API</a>.</li><li>Clicca <b>Create</b> (o <b>Request an API key</b>) e scegli <b>Developer</b>.</li><li>Accetta i termini e compila il breve modulo — per nome/URL dell\'app va bene qualsiasi cosa (es. <code>uso personale</code> e <code>http://localhost</code>).</li><li>Copia il valore indicato come <b>API Key (v3 auth)</b> — la stringa corta — e incollalo nel campo qui sopra.</li>',
@@ -152,7 +152,7 @@ const T = {
     n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-episodi-tmdb', n_updated: 'aggiornato', n_error: 'errore', n_split: 'divisa',
   },
   es: {
-    subtitle: 'Alinea tu exportación de TV Time con el catálogo de TMDB — corrige la numeración rota, añade fechas de emisión e IDs de TMDB, sin perder nunca un "visto". Todo se ejecuta en tu navegador: tus archivos nunca salen de tu ordenador.',
+    subtitle: 'Alinea tu exportación de TV Time con el catálogo de TMDB, corrigiendo los problemas más comunes que causan episodios perdidos o datos incorrectos al hacer seguimiento: numeración rota, series que TV Time agrupa en una sola y que se separan como en TMDB (p. ej. Berlin, Monster), y episodios especiales que en realidad son películas (frecuente en anime, p. ej. Blue Lock) movidos a la lista de películas. También añade fechas de emisión e IDs de TMDB, sin perder nunca un "visto". Todo se ejecuta en tu navegador: tus archivos nunca salen de tu ordenador.',
     apiLabel: 'Clave API de TMDB <span class="hint">— gratis en <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> (la clave v3, la corta)</span>',
     apiHelpSummary: '¿Cómo consigo una clave API de TMDB?',
     apiHelpSteps: '<li>Crea una cuenta gratuita en <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> y confírmala con el correo que te envían.</li><li>Con la sesión iniciada, abre <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Ajustes → API</a>.</li><li>Haz clic en <b>Create</b> (o <b>Request an API key</b>) y elige <b>Developer</b>.</li><li>Acepta los términos y rellena el breve formulario — para el nombre/URL de la app vale cualquier cosa (p. ej. <code>uso personal</code> y <code>http://localhost</code>).</li><li>Copia el valor indicado como <b>API Key (v3 auth)</b> — la cadena corta — y pégalo en el campo de arriba.</li>',
@@ -170,7 +170,7 @@ const T = {
     n_noTmdb: 'sin-tmdb', n_noEpisodes: 'sin-episodios-tmdb', n_updated: 'actualizada', n_error: 'error', n_split: 'dividida',
   },
   fr: {
-    subtitle: 'Alignez votre export TV Time sur le catalogue TMDB — corrige la numérotation cassée, ajoute les dates de diffusion et les identifiants TMDB, sans jamais perdre un "vu". Tout s\'exécute dans votre navigateur : vos fichiers ne quittent jamais votre ordinateur.',
+    subtitle: 'Alignez votre export TV Time sur le catalogue TMDB, en corrigeant les problèmes les plus courants qui font perdre des épisodes ou faussent les données pendant le suivi : numérotation cassée, séries que TV Time regroupe en une seule et qui sont séparées comme sur TMDB (ex. Berlin, Monster), et épisodes spéciaux qui sont en réalité des films (fréquent avec les animes, ex. Blue Lock), déplacés vers la liste des films. Ajoute aussi les dates de diffusion et les identifiants TMDB, sans jamais perdre un "vu". Tout s\'exécute dans votre navigateur : vos fichiers ne quittent jamais votre ordinateur.',
     apiLabel: 'Clé API TMDB <span class="hint">— gratuite sur <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> (la clé v3, la courte)</span>',
     apiHelpSummary: 'Comment obtenir une clé API TMDB ?',
     apiHelpSteps: '<li>Créez un compte gratuit sur <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> et confirmez-le via l\'e-mail qu\'ils envoient.</li><li>Une fois connecté, ouvrez <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Paramètres → API</a>.</li><li>Cliquez sur <b>Create</b> (ou <b>Request an API key</b>) et choisissez <b>Developer</b>.</li><li>Acceptez les conditions et remplissez le court formulaire — pour le nom/URL de l\'app, n\'importe quoi convient (ex. <code>usage personnel</code> et <code>http://localhost</code>).</li><li>Copiez la valeur intitulée <b>API Key (v3 auth)</b> — la chaîne courte — et collez-la dans le champ ci-dessus.</li>',
@@ -188,7 +188,7 @@ const T = {
     n_noTmdb: 'sans-tmdb', n_noEpisodes: 'sans-épisodes-tmdb', n_updated: 'mise à jour', n_error: 'erreur', n_split: 'divisée',
   },
   de: {
-    subtitle: 'Gleiche deinen TV-Time-Export mit dem TMDB-Katalog ab — korrigiert kaputte Nummerierung, ergänzt Ausstrahlungsdaten und TMDB-IDs, ohne je ein „gesehen" zu verlieren. Alles läuft in deinem Browser: deine Dateien verlassen nie deinen Computer.',
+    subtitle: 'Gleiche deinen TV-Time-Export mit dem TMDB-Katalog ab und behebe die häufigsten Probleme, die beim Tracking zu fehlenden Episoden oder falschen Daten führen: kaputte Nummerierung, Serien, die TV Time zu einer einzigen zusammenfasst und die wie bei TMDB getrennt werden (z. B. Berlin, Monster), sowie Special-Episoden, die eigentlich Filme sind (häufig bei Anime, z. B. Blue Lock) und in die Filmliste verschoben werden. Ergänzt außerdem Ausstrahlungsdaten und TMDB-IDs, ohne je ein „gesehen" zu verlieren. Alles läuft in deinem Browser: deine Dateien verlassen nie deinen Computer.',
     apiLabel: 'TMDB-API-Schlüssel <span class="hint">— kostenlos auf <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> (der kurze v3-Schlüssel)</span>',
     apiHelpSummary: 'Wie bekomme ich einen TMDB-API-Schlüssel?',
     apiHelpSteps: '<li>Erstelle ein kostenloses Konto auf <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> und bestätige es über die zugesandte E-Mail.</li><li>Angemeldet öffnest du <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Einstellungen → API</a>.</li><li>Klicke auf <b>Create</b> (oder <b>Request an API key</b>) und wähle <b>Developer</b>.</li><li>Akzeptiere die Bedingungen und fülle das kurze Formular aus — für App-Name/URL ist alles möglich (z. B. <code>persönliche Nutzung</code> und <code>http://localhost</code>).</li><li>Kopiere den Wert <b>API Key (v3 auth)</b> — die kurze Zeichenfolge — und füge ihn oben ein.</li>',
@@ -206,7 +206,7 @@ const T = {
     n_noTmdb: 'kein-tmdb', n_noEpisodes: 'keine-tmdb-episoden', n_updated: 'aktualisiert', n_error: 'Fehler', n_split: 'aufgeteilt',
   },
   pt: {
-    subtitle: 'Alinhe a sua exportação do TV Time com o catálogo TMDB — corrige numeração quebrada, adiciona datas de exibição e IDs do TMDB, sem nunca perder um "visto". Tudo corre no seu navegador: os seus ficheiros nunca saem do seu computador.',
+    subtitle: 'Alinhe a sua exportação do TV Time com o catálogo TMDB, corrigindo os problemas mais comuns que causam episódios em falta ou dados errados durante o tracking: numeração quebrada, séries que o TV Time agrupa numa só e que são separadas como no TMDB (ex. Berlin, Monster), e episódios especiais que são na verdade filmes (comum em anime, ex. Blue Lock) movidos para a lista de filmes. Também adiciona datas de exibição e IDs do TMDB, sem nunca perder um "visto". Tudo corre no seu navegador: os seus ficheiros nunca saem do seu computador.',
     apiLabel: 'Chave API do TMDB <span class="hint">— grátis em <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> (a chave v3, a curta)</span>',
     apiHelpSummary: 'Como obtenho uma chave API do TMDB?',
     apiHelpSteps: '<li>Crie uma conta gratuita em <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> e confirme-a através do e-mail que enviam.</li><li>Com sessão iniciada, abra <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">Definições → API</a>.</li><li>Clique em <b>Create</b> (ou <b>Request an API key</b>) e escolha <b>Developer</b>.</li><li>Aceite os termos e preencha o breve formulário — para o nome/URL da app serve qualquer coisa (ex. <code>uso pessoal</code> e <code>http://localhost</code>).</li><li>Copie o valor indicado como <b>API Key (v3 auth)</b> — a cadeia curta — e cole-o no campo acima.</li>',
@@ -224,7 +224,7 @@ const T = {
     n_noTmdb: 'sem-tmdb', n_noEpisodes: 'sem-episódios-tmdb', n_updated: 'atualizada', n_error: 'erro', n_split: 'dividida',
   },
   ja: {
-    subtitle: 'TV Time のエクスポートを TMDB カタログに合わせます — 崩れた話数を修正し、放送日と TMDB ID を追加します。「視聴済み」を失うことはありません。すべてブラウザ内で動作し、ファイルがパソコンの外に出ることはありません。',
+    subtitle: 'TV Time のエクスポートを TMDB カタログに合わせ、視聴記録で見落としやデータの誤りを引き起こしやすい問題を修正します。崩れた話数、TV Time では1つにまとめられているが TMDB では別作品として分かれている作品（例：Berlin、Monster）の分離、そしてアニメによくある「実は映画」の特別編（例：ブルーロック）を映画リストへ移動する処理などです。放送日と TMDB ID も追加し、「視聴済み」を失うことはありません。すべてブラウザ内で動作し、ファイルがパソコンの外に出ることはありません。',
     apiLabel: 'TMDB API キー <span class="hint">— <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> で無料（短い v3 キー）</span>',
     apiHelpSummary: 'TMDB API キーの取得方法は？',
     apiHelpSteps: '<li><a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> で無料アカウントを作成し、届いたメールで確認します。</li><li>ログインした状態で <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">設定 → API</a> を開きます。</li><li><b>Create</b>（または <b>Request an API key</b>）をクリックし、<b>Developer</b> を選びます。</li><li>規約に同意し、短いフォームに記入します — アプリ名/URL は何でも構いません（例：<code>個人利用</code> と <code>http://localhost</code>）。</li><li><b>API Key (v3 auth)</b> と書かれた値（短い文字列）をコピーし、上の欄に貼り付けます。</li>',
@@ -242,7 +242,7 @@ const T = {
     n_noTmdb: 'TMDBなし', n_noEpisodes: 'TMDBエピソードなし', n_updated: '更新', n_error: 'エラー', n_split: '分割',
   },
   zh: {
-    subtitle: '将你的 TV Time 导出与 TMDB 目录对齐 — 修复错乱的集数编号，补充播出日期和 TMDB ID，绝不丢失任何"已看"记录。全部在你的浏览器中运行：文件永远不会离开你的电脑。',
+    subtitle: '将你的 TV Time 导出与 TMDB 目录对齐，修复追剧过程中最常导致集数丢失或数据错误的问题：错乱的集数编号、TV Time 合并成一部但在 TMDB 上其实是独立作品的剧集（例如 Berlin、Monster）会被拆分开来，以及那些其实是电影的特别篇（常见于动漫，例如《蓝色监狱》）会被移动到电影列表中。同时还会补充播出日期和 TMDB ID，绝不丢失任何"已看"记录。全部在你的浏览器中运行：文件永远不会离开你的电脑。',
     apiLabel: 'TMDB API 密钥 <span class="hint">— 在 <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">themoviedb.org</a> 免费获取（短的 v3 密钥）</span>',
     apiHelpSummary: '如何获取 TMDB API 密钥？',
     apiHelpSteps: '<li>在 <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> 注册一个免费账号，并通过收到的邮件确认。</li><li>登录后打开 <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">设置 → API</a>。</li><li>点击 <b>Create</b>（或 <b>Request an API key</b>），选择 <b>Developer</b>。</li><li>接受条款并填写简短表单 — 应用名称/网址填任意内容即可（例如 <code>个人使用</code> 和 <code>http://localhost</code>）。</li><li>复制标注为 <b>API Key (v3 auth)</b> 的值（那串短字符串），粘贴到上面的输入框。</li>',
