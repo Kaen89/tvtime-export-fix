@@ -449,8 +449,8 @@ async function specialAsMovie(sp, seriesTitle) {
     const d = await tmdb(`/find/${id}`, `&external_source=${src}`)
     if (d?.movie_results?.length) return movieFromTmdb(d.movie_results[0].id, sp)
   }
-  // Accetto un match della ricerca solo se combacia col nome dello special E il
-  // film è legato a questa serie (evita "Scary Movie" ≠ special dei Simpson).
+  // Only accept a search match if it matches the special's name AND the movie
+  // is tied to this series (avoids "Scary Movie" ≠ a Simpsons special).
   const s = await tmdb('/search/movie', `&language=it-IT&query=${encodeURIComponent(sp.name)}`)
   for (const hit of (s?.results || []).slice(0, 5)) {
     const matchesSpecial = tokenOverlap(sp.name, hit.title) >= 0.5 || tokenOverlap(sp.name, hit.original_title) >= 0.5
@@ -668,8 +668,8 @@ $('#go').onclick = async () => {
     results.push({ f, out })
   }
 
-  // I film estratti dagli special confluiscono nell'output dei film (o in un file
-  // dedicato se non è stato caricato alcun file movies), evitando doppioni.
+  // Movies extracted from specials merge into the movies output (or a
+  // dedicated file if no movies file was loaded), avoiding duplicates.
   if (extraMovies.length) {
     const moviesRes = results.find((r) => r.f.kind === 'movies')
     const target = moviesRes ? moviesRes.out : []
