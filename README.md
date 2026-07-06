@@ -1,3 +1,5 @@
+🇬🇧 English | [🇮🇹 Italiano](README.it.md)
+
 # 🩹 Fix TV Time Export
 
 A tiny, single-file web tool that realigns a **TV Time** export to the **TMDB**
