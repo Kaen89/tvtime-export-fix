@@ -472,7 +472,7 @@ async function extractMovieSpecials(specials, seriesTitle) {
 }
 function buildEpisode(c, state) {
   return {
-    id: { tvdb: c.tvdb ?? null, imdb: null }, number: c.number, name: c.name, special: false,
+    id: { tvdb: c.tvdb ?? state?.id?.tvdb ?? null, imdb: state?.id?.imdb ?? null }, number: c.number, name: c.name, special: false,
     is_watched: !!state?.is_watched, watched_at: state?.is_watched ? state.watched_at ?? null : null,
     rewatch_count: state?.rewatch_count || 0,
     watched_count: state?.is_watched ? Math.max(1, state.watched_count || 0) : 0,
