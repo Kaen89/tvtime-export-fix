@@ -131,7 +131,7 @@ const T = {
     kSeries: 'TV series', kMovies: 'movies', kBad: 'invalid',
     download: 'Download', done: 'Done.',
     n_aligned: 'aligned', n_remapped: 'remapped', n_preserved: 'preserved',
-    n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-tmdb-episodes', n_updated: 'updated', n_error: 'error',
+    n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-tmdb-episodes', n_updated: 'updated', n_error: 'error', n_split: 'split',
   },
   it: {
     subtitle: 'Allinea il tuo export di TV Time al catalogo TMDB — ripara numerazioni sballate, aggiunge date di uscita e ID TMDB, senza mai perdere un "visto". Tutto nel tuo browser: i file non lasciano il tuo computer.',
@@ -149,7 +149,7 @@ const T = {
     kSeries: 'serie TV', kMovies: 'film', kBad: 'non valido',
     download: 'Scarica', done: 'Fatto.',
     n_aligned: 'allineata', n_remapped: 'rimappata', n_preserved: 'conservata',
-    n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-episodi-tmdb', n_updated: 'aggiornato', n_error: 'errore',
+    n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-episodi-tmdb', n_updated: 'aggiornato', n_error: 'errore', n_split: 'divisa',
   },
   es: {
     subtitle: 'Alinea tu exportación de TV Time con el catálogo de TMDB — corrige la numeración rota, añade fechas de emisión e IDs de TMDB, sin perder nunca un "visto". Todo se ejecuta en tu navegador: tus archivos nunca salen de tu ordenador.',
@@ -167,7 +167,7 @@ const T = {
     kSeries: 'series', kMovies: 'películas', kBad: 'no válido',
     download: 'Descargar', done: 'Listo.',
     n_aligned: 'alineada', n_remapped: 'remapeada', n_preserved: 'conservada',
-    n_noTmdb: 'sin-tmdb', n_noEpisodes: 'sin-episodios-tmdb', n_updated: 'actualizada', n_error: 'error',
+    n_noTmdb: 'sin-tmdb', n_noEpisodes: 'sin-episodios-tmdb', n_updated: 'actualizada', n_error: 'error', n_split: 'dividida',
   },
   fr: {
     subtitle: 'Alignez votre export TV Time sur le catalogue TMDB — corrige la numérotation cassée, ajoute les dates de diffusion et les identifiants TMDB, sans jamais perdre un "vu". Tout s\'exécute dans votre navigateur : vos fichiers ne quittent jamais votre ordinateur.',
@@ -185,7 +185,7 @@ const T = {
     kSeries: 'séries', kMovies: 'films', kBad: 'invalide',
     download: 'Télécharger', done: 'Terminé.',
     n_aligned: 'alignée', n_remapped: 'remappée', n_preserved: 'conservée',
-    n_noTmdb: 'sans-tmdb', n_noEpisodes: 'sans-épisodes-tmdb', n_updated: 'mise à jour', n_error: 'erreur',
+    n_noTmdb: 'sans-tmdb', n_noEpisodes: 'sans-épisodes-tmdb', n_updated: 'mise à jour', n_error: 'erreur', n_split: 'divisée',
   },
   de: {
     subtitle: 'Gleiche deinen TV-Time-Export mit dem TMDB-Katalog ab — korrigiert kaputte Nummerierung, ergänzt Ausstrahlungsdaten und TMDB-IDs, ohne je ein „gesehen" zu verlieren. Alles läuft in deinem Browser: deine Dateien verlassen nie deinen Computer.',
@@ -203,7 +203,7 @@ const T = {
     kSeries: 'Serien', kMovies: 'Filme', kBad: 'ungültig',
     download: 'Herunterladen', done: 'Fertig.',
     n_aligned: 'ausgerichtet', n_remapped: 'neu zugeordnet', n_preserved: 'beibehalten',
-    n_noTmdb: 'kein-tmdb', n_noEpisodes: 'keine-tmdb-episoden', n_updated: 'aktualisiert', n_error: 'Fehler',
+    n_noTmdb: 'kein-tmdb', n_noEpisodes: 'keine-tmdb-episoden', n_updated: 'aktualisiert', n_error: 'Fehler', n_split: 'aufgeteilt',
   },
   pt: {
     subtitle: 'Alinhe a sua exportação do TV Time com o catálogo TMDB — corrige numeração quebrada, adiciona datas de exibição e IDs do TMDB, sem nunca perder um "visto". Tudo corre no seu navegador: os seus ficheiros nunca saem do seu computador.',
@@ -221,7 +221,7 @@ const T = {
     kSeries: 'séries', kMovies: 'filmes', kBad: 'inválido',
     download: 'Descarregar', done: 'Concluído.',
     n_aligned: 'alinhada', n_remapped: 'remapeada', n_preserved: 'conservada',
-    n_noTmdb: 'sem-tmdb', n_noEpisodes: 'sem-episódios-tmdb', n_updated: 'atualizada', n_error: 'erro',
+    n_noTmdb: 'sem-tmdb', n_noEpisodes: 'sem-episódios-tmdb', n_updated: 'atualizada', n_error: 'erro', n_split: 'dividida',
   },
   ja: {
     subtitle: 'TV Time のエクスポートを TMDB カタログに合わせます — 崩れた話数を修正し、放送日と TMDB ID を追加します。「視聴済み」を失うことはありません。すべてブラウザ内で動作し、ファイルがパソコンの外に出ることはありません。',
@@ -239,7 +239,7 @@ const T = {
     kSeries: 'ドラマ', kMovies: '映画', kBad: '無効',
     download: 'ダウンロード', done: '完了。',
     n_aligned: '整合', n_remapped: '再マッピング', n_preserved: '保持',
-    n_noTmdb: 'TMDBなし', n_noEpisodes: 'TMDBエピソードなし', n_updated: '更新', n_error: 'エラー',
+    n_noTmdb: 'TMDBなし', n_noEpisodes: 'TMDBエピソードなし', n_updated: '更新', n_error: 'エラー', n_split: '分割',
   },
   zh: {
     subtitle: '将你的 TV Time 导出与 TMDB 目录对齐 — 修复错乱的集数编号，补充播出日期和 TMDB ID，绝不丢失任何"已看"记录。全部在你的浏览器中运行：文件永远不会离开你的电脑。',
@@ -257,7 +257,7 @@ const T = {
     kSeries: '剧集', kMovies: '电影', kBad: '无效',
     download: '下载', done: '完成。',
     n_aligned: '已对齐', n_remapped: '已重映射', n_preserved: '已保留',
-    n_noTmdb: '无-tmdb', n_noEpisodes: '无-tmdb-剧集', n_updated: '已更新', n_error: '错误',
+    n_noTmdb: '无-tmdb', n_noEpisodes: '无-tmdb-剧集', n_updated: '已更新', n_error: '错误', n_split: '已拆分',
   },
 }
 let lang = localStorage.getItem('ui_lang') || (navigator.language || 'en').slice(0, 2)
@@ -383,7 +383,16 @@ async function findTmdbId(serie) {
   }
   return null
 }
-async function fetchCanonical(tmdbId) {
+// Resolve a single episode via its TVDB id → real (show_id, season, number) on
+// TMDB. This is what lets us detach series that TheTVDB lumped into one entry.
+async function resolveEpisode(tvdbEpId) {
+  if (!tvdbEpId) return null
+  const data = await tmdb(`/find/${tvdbEpId}`, `&external_source=tvdb_id`)
+  const r = data?.tv_episode_results?.[0]
+  if (!r) return null
+  return { show_id: r.show_id, season: r.season_number, number: r.episode_number }
+}
+async function fetchShow(tmdbId) {
   const show = await tmdb(`/tv/${tmdbId}`)
   if (!show) return null
   const canonical = []
@@ -395,7 +404,71 @@ async function fetchCanonical(tmdbId) {
       canonical.push({ season: season.season_number, number: ep.episode_number, name: ep.name || `Episode ${ep.episode_number}`, air_date: ep.air_date || null, tvdb: null })
     }
   }
-  return { canonical, showName: show.name }
+  const ext = await tmdb(`/tv/${tmdbId}/external_ids`)
+  return { canonical, name: show.name, tvdb: ext?.tvdb_id ?? null, imdb: ext?.imdb_id ?? null }
+}
+const showCache = new Map()
+async function getShow(tmdbId) {
+  if (!showCache.has(tmdbId)) showCache.set(tmdbId, await fetchShow(tmdbId))
+  return showCache.get(tmdbId)
+}
+// Some "specials" are actually feature films (e.g. "BLUE LOCK IL FILM -EPISODIO
+// NAGI-"): on TMDB they exist as a movie, not an episode. Detect and move them
+// to the movies output.
+const MOVIE_MARKER = /(\bthe movie\b|\bil film\b|\bla película\b|\ble film\b|\bder film\b|\bo filme\b|\bmovie\b|\bfilm\b|gekijou?ban|劇場版|-\s*episode|-\s*episodio)/i
+const STOP = new Set(['the', 'a', 'an', 'il', 'lo', 'la', 'le', 'les', 'i', 'gli', 'un', 'una', 'movie',
+  'film', 'filme', 'della', 'del', 'di', 'e', 'of', 'and', 'episode', 'episodio', 'part', 'parte',
+  'der', 'das', 'o', 'película', 'in', 'nel'])
+function titleTokens(s) {
+  return new Set((s || '').toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .split(/\s+/).filter((w) => w && !STOP.has(w)))
+}
+function tokenOverlap(a, b) {
+  const A = titleTokens(a), B = titleTokens(b)
+  if (!A.size || !B.size) return 0
+  let inter = 0; for (const w of A) if (B.has(w)) inter++
+  return inter / Math.min(A.size, B.size)
+}
+async function movieFromTmdb(id, sp) {
+  const d = await tmdb(`/movie/${id}`, `&language=it-IT&append_to_response=external_ids`)
+  if (!d) return null
+  return {
+    id: { tvdb: d.external_ids?.tvdb_id ?? sp.id?.tvdb ?? null, imdb: d.external_ids?.imdb_id ?? null },
+    uuid: crypto.randomUUID(),
+    created_at: sp.watched_at ? new Date(sp.watched_at.replace(' ', 'T') + 'Z').toISOString() : new Date().toISOString(),
+    title: d.title || sp.name,
+    year: d.release_date ? Number(d.release_date.slice(0, 4)) : null,
+    watched_at: sp.watched_at ?? null, is_watched: !!sp.is_watched, is_favorite: false,
+    rewatch_count: sp.rewatch_count || 0, tmdb_id: id, release_date: d.release_date || null,
+  }
+}
+async function specialAsMovie(sp, seriesTitle) {
+  if (!MOVIE_MARKER.test(sp.name || '')) return null
+  for (const [id, src] of [[sp.id?.tvdb, 'tvdb_id'], [sp.id?.imdb, 'imdb_id']]) {
+    if (!id) continue
+    const d = await tmdb(`/find/${id}`, `&external_source=${src}`)
+    if (d?.movie_results?.length) return movieFromTmdb(d.movie_results[0].id, sp)
+  }
+  // Accetto un match della ricerca solo se combacia col nome dello special E il
+  // film è legato a questa serie (evita "Scary Movie" ≠ special dei Simpson).
+  const s = await tmdb('/search/movie', `&language=it-IT&query=${encodeURIComponent(sp.name)}`)
+  for (const hit of (s?.results || []).slice(0, 5)) {
+    const matchesSpecial = tokenOverlap(sp.name, hit.title) >= 0.5 || tokenOverlap(sp.name, hit.original_title) >= 0.5
+    const tiedToSeries = tokenOverlap(seriesTitle, sp.name) >= 0.5 ||
+      tokenOverlap(seriesTitle, hit.title) >= 0.5 || tokenOverlap(seriesTitle, hit.original_title) >= 0.5
+    if (matchesSpecial && tiedToSeries) return movieFromTmdb(hit.id, sp)
+  }
+  return null
+}
+async function extractMovieSpecials(specials, seriesTitle) {
+  const keptSpecials = [], movies = [], extractedTvdb = new Set(), seenTmdb = new Set()
+  for (const sp of specials) {
+    const mv = await specialAsMovie(sp, seriesTitle)
+    if (mv && !seenTmdb.has(mv.tmdb_id)) { movies.push(mv); seenTmdb.add(mv.tmdb_id); if (sp.id?.tvdb) extractedTvdb.add(sp.id.tvdb) }
+    else if (mv) { if (sp.id?.tvdb) extractedTvdb.add(sp.id.tvdb) }
+    else keptSpecials.push(sp)
+  }
+  return { keptSpecials, movies, extractedTvdb }
 }
 function buildEpisode(c, state) {
   return {
@@ -414,16 +487,11 @@ function toSeasons(episodes, specials) {
   if (specials.length) seasons.unshift({ number: 0, is_specials: true, episodes: specials.map((s) => ({ ...s, _season: undefined, special: true })) })
   return seasons
 }
-async function fixSeries(serie) {
-  const { flat, specials } = flattenExport(serie)
-  const tmdbId = await findTmdbId(serie)
-  if (!tmdbId) return { serie, note: 'noTmdb' }
-  const fetched = await fetchCanonical(tmdbId)
-  if (!fetched || !fetched.canonical.length) return { serie, note: 'noEpisodes' }
-  const { canonical } = fetched
+const countBy = (list, sKey) => { const m = {}; for (const e of list) m[e[sKey]] = (m[e[sKey]] || 0) + 1; return m }
+// Rules 3/4/5: align a flat episode list to TMDB's canonical structure.
+function alignToCanonical(flat, canonical) {
   const canonKeys = new Set(canonical.map((c) => `S${c.season}E${c.number}`))
   const localByKey = new Map(flat.map((e) => [`S${e._season}E${e.number}`, e]))
-  const countBy = (list, sKey) => { const m = {}; for (const e of list) m[e[sKey]] = (m[e[sKey]] || 0) + 1; return m }
   const lc = countBy(flat, '_season'), cc = countBy(canonical, 'season')
   const mismatch = flat.some((e) => !canonKeys.has(`S${e._season}E${e.number}`)) ||
     Object.keys(lc).some((s) => cc[s] !== undefined && cc[s] !== lc[s])
@@ -452,7 +520,88 @@ async function fixSeries(serie) {
     } }))
     note = 'preserved'; extra = ` (${flat.length}>${canonical.length})`
   }
-  return { serie: { ...serie, tmdb_id: tmdbId, seasons: toSeasons(episodes, specials) }, note, extra }
+  return { episodes, note, extra }
+}
+function withSeasons(base, tmdbId, episodes, specials) {
+  return { ...base, tmdb_id: tmdbId, seasons: toSeasons(episodes, specials) }
+}
+// Base for a detached series (a fresh entry synthesized from TMDB metadata).
+function splitBase(meta) {
+  return {
+    uuid: crypto.randomUUID(),
+    id: { tvdb: meta.tvdb ?? null, imdb: meta.imdb ?? null },
+    created_at: new Date().toISOString(),
+    title: meta.name, status: 'continuing', is_favorite: false, _noEpisodeData: false,
+  }
+}
+async function fixSeries(serie) {
+  const { flat, specials: allSpecials } = flattenExport(serie)
+  const { keptSpecials: specials, movies, extractedTvdb } = await extractMovieSpecials(allSpecials, serie.title)
+  const mainId = await findTmdbId(serie)
+  let canonical = []
+  if (mainId) { const show = await getShow(mainId); if (show) canonical = show.canonical }
+  const canonKeys = new Set(canonical.map((c) => `S${c.season}E${c.number}`))
+
+  // Clean case (all keys covered by TMDB): classic single-series path.
+  const lc = countBy(flat, '_season'), cc = countBy(canonical, 'season')
+  const clean = canonical.length &&
+    !flat.some((e) => !canonKeys.has(`S${e._season}E${e.number}`)) &&
+    !Object.keys(lc).some((s) => cc[s] !== undefined && cc[s] !== lc[s])
+  if (clean) {
+    const r = alignToCanonical(flat, canonical)
+    return { series: [withSeasons(serie, mainId, r.episodes, specials)], movies, note: r.note, extra: r.extra }
+  }
+
+  // Orphan episodes (keys absent from the main TMDB series): resolve each one by
+  // its TVDB id to find which show it really belongs to.
+  const leftovers = flat.filter((e) => !canonKeys.has(`S${e._season}E${e.number}`))
+  const kept = flat.filter((e) => canonKeys.has(`S${e._season}E${e.number}`))
+  const mainExtra = [], foreignByShow = new Map()
+  for (const e of leftovers) {
+    const res = await resolveEpisode(e.id?.tvdb)
+    if (res && mainId && res.show_id === mainId) mainExtra.push({ ...e, _season: res.season, number: res.number })
+    else if (res && res.show_id !== mainId) {
+      if (!foreignByShow.has(res.show_id)) foreignByShow.set(res.show_id, [])
+      foreignByShow.get(res.show_id).push({ ...e, _season: res.season, number: res.number })
+    } else mainExtra.push(e) // unresolved: keep under the main series as-is
+  }
+
+  // No foreign series found → classic behavior, unchanged.
+  if (foreignByShow.size === 0) {
+    if (!mainId || !canonical.length) {
+      const note = mainId ? 'noEpisodes' : 'noTmdb'
+      if (!movies.length) return { series: [serie], movies, note }
+      const seasons = (serie.seasons || [])
+        .map((s) => ({ ...s, episodes: (s.episodes || []).filter((ep) => !extractedTvdb.has(ep.id?.tvdb)) }))
+        .filter((s) => s.episodes.length)
+      return { series: [{ ...serie, seasons }], movies, note }
+    }
+    const r = alignToCanonical(flat, canonical)
+    return { series: [withSeasons(serie, mainId, r.episodes, specials)], movies, note: r.note, extra: r.extra }
+  }
+
+  // At least one lumped-in series: split it out.
+  const sortEps = (a, b) => a._season - b._season || a.number - b.number
+  const outSeries = []
+  if (mainId && canonical.length) {
+    const r = alignToCanonical([...kept, ...mainExtra].sort(sortEps), canonical)
+    outSeries.push(withSeasons(serie, mainId, r.episodes, specials))
+  } else {
+    // No main TMDB series: promote the largest group, keeping original metadata.
+    let bestId = null, best = -1
+    for (const [sid, eps] of foreignByShow) if (eps.length > best) { best = eps.length; bestId = sid }
+    const promoted = foreignByShow.get(bestId); foreignByShow.delete(bestId)
+    const show = await getShow(bestId)
+    const r = alignToCanonical(promoted.sort(sortEps), show?.canonical || [])
+    outSeries.push(withSeasons(serie, bestId, r.episodes, specials))
+  }
+  for (const [sid, eps] of foreignByShow) {
+    const show = await getShow(sid)
+    if (!show) continue
+    const r = alignToCanonical(eps.sort(sortEps), show.canonical)
+    outSeries.push(withSeasons(splitBase(show), sid, r.episodes, []))
+  }
+  return { series: outSeries, movies, note: 'split', extra: ` (${outSeries.map((s) => s.title).join(' + ')})` }
 }
 
 // --- Movies logic ------------------------------------------------------------
@@ -484,31 +633,54 @@ $('#go').onclick = async () => {
   logBox.innerHTML = ''; $('#dl').innerHTML = ''; $('#dl').style.display = 'none'
   $('#go').disabled = true; progress(0, total)
 
+  const addDownload = (out, filename) => {
+    const blob = new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = filename
+    a.textContent = `⬇ ${t('download')} ${a.download}`
+    a.className = 'file'; a.style.textDecoration = 'none'
+    $('#dl').append(a)
+  }
+
+  const results = []      // { f, out }
+  const extraMovies = []  // film estratti dagli special delle serie
   for (const f of jobs) {
     log(`\n▶ ${f.name}  (${f.data.length} ${f.kind === 'series' ? t('kSeries') : t('kMovies')})`)
     const out = [], notes = {}
     for (const item of f.data) {
       let title, note, extra = ''
       try {
-        if (f.kind === 'series') { const r = await fixSeries(item); out.push(r.serie); title = r.serie.title; note = r.note; extra = r.extra || '' }
-        else { const r = await fixMovie(item); out.push(r.movie); title = r.movie.title; note = r.note }
+        if (f.kind === 'series') {
+          const r = await fixSeries(item); out.push(...r.series); title = r.series[0].title; note = r.note; extra = r.extra || ''
+          if (r.movies?.length) { extraMovies.push(...r.movies); extra += ` [+${r.movies.length} 🎬 ${r.movies.map((m) => m.title).join(', ')}]` }
+        } else { const r = await fixMovie(item); out.push(r.movie); title = r.movie.title; note = r.note }
       } catch { out.push(item); title = item.title; note = 'error' }
       notes[note] = (notes[note] || 0) + 1
       const cls = note === 'noTmdb' || note === 'noEpisodes' || note === 'error' ? 'c-warn'
+        : note === 'split' ? 'c-ok'
         : note === 'aligned' || note === 'updated' ? 'c-mut' : 'c-ok'
       done++; progress(done, total)
       const label = t('n_' + note)
       log(`  ${String(done).padStart(4)}/${total}  ${(label + extra).padEnd(24)} ${title}`, cls)
     }
     log(`  ↳ ${JSON.stringify(notes)}`, 'c-ok')
-    const blob = new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' })
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob)
-    a.download = f.name.replace(/\.json$/i, '') + '-fixed.json'
-    a.textContent = `⬇ ${t('download')} ${a.download}`
-    a.className = 'file'; a.style.textDecoration = 'none'
-    $('#dl').append(a)
+    results.push({ f, out })
   }
+
+  // I film estratti dagli special confluiscono nell'output dei film (o in un file
+  // dedicato se non è stato caricato alcun file movies), evitando doppioni.
+  if (extraMovies.length) {
+    const moviesRes = results.find((r) => r.f.kind === 'movies')
+    const target = moviesRes ? moviesRes.out : []
+    const seen = new Set(target.map((m) => m.tmdb_id).filter(Boolean))
+    let added = 0
+    for (const mv of extraMovies) { if (mv.tmdb_id && seen.has(mv.tmdb_id)) continue; target.push(mv); if (mv.tmdb_id) seen.add(mv.tmdb_id); added++ }
+    log(`\n🎬 ${added} ${t('kMovies')} ← ${extraMovies.length}`, 'c-ok')
+    if (!moviesRes) results.push({ f: { name: 'tvtime-movies-extracted', kind: 'movies' }, out: target })
+  }
+
+  for (const r of results) addDownload(r.out, r.f.name.replace(/\.json$/i, '') + '-fixed.json')
   $('#dl').style.display = 'block'
   $('#go').disabled = false
   log(`\n✔ ${t('done')}`, 'c-ok')
