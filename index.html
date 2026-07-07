@@ -562,6 +562,24 @@ async function findTmdbId(serie) {
     const data = await tmdb(`/find/${id}`, `&external_source=${source}`)
     if (data?.tv_results?.length) return data.tv_results[0].id
   }
+  // Fallback: many shows exist on TMDB but have no TheTVDB id linked, so /find
+  // misses them. Try a name search and accept a hit only if the title matches
+  // (token overlap). Two guards keep this conservative:
+  //  - the query is stripped of a trailing "(...)" disambiguator and of symbols
+  //    like ® / emoji, which otherwise make TMDB's search return nothing;
+  //  - we accept the match only when a *single* distinct show qualifies, so
+  //    format shows with many national adaptations (e.g. "99 to Beat", which
+  //    returns 5 equally-named hits) stay no-tmdb rather than resolve wrongly.
+  const title = (serie.title || '').replace(/\s*\([^)]*\)\s*$/, '').trim()
+  const query = title.normalize('NFKD').replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim()
+  if (query) {
+    const s = await tmdb('/search/tv', `&query=${encodeURIComponent(query)}`)
+    const ids = new Set()
+    for (const hit of (s?.results || []).slice(0, 5)) {
+      if (tokenOverlap(title, hit.name) >= 0.5 || tokenOverlap(title, hit.original_name) >= 0.5) ids.add(hit.id)
+    }
+    if (ids.size === 1) return [...ids][0]
+  }
   return null
 }
 // Resolve a single episode via its TVDB id → real (show_id, season, number) on
