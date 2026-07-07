@@ -42,6 +42,7 @@
   .tag { font-size: 12px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
   .tag.series { background: #1d3a5f; color: #9cc7ff; }
   .tag.movies { background: #3a2d5f; color: #cbb6ff; }
+  .tag.lists { background: #1d4a41; color: #8fe6cf; }
   .tag.bad { background: #4a2330; color: #ff9db0; }
   .file button { margin-left: auto; background: none; border: 0; color: var(--mut); cursor: pointer; font-size: 18px; }
   button.primary {
@@ -87,8 +88,9 @@
       <strong data-i18n="dropStrong"></strong><br>
       <span data-i18n="dropSub"></span>
     </div>
-    <input id="picker" type="file" accept=".json,application/json" multiple hidden>
+    <input id="picker" type="file" accept=".json,.zip,application/json,application/zip" multiple hidden>
     <div id="files" class="files"></div>
+    <p id="missing" class="hint" style="display:none;margin:10px 0 0"></p>
     <details class="help">
       <summary data-i18n="exportHelpSummary"></summary>
       <ol data-i18n-html="exportHelpSteps"></ol>
@@ -124,12 +126,15 @@ const T = {
     exportHelpSteps: '<li>Install the free <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> extension from the Chrome Web Store.</li><li>Open <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> and log in to your TV Time account.</li><li>Click the <b>TV Time Out by Refract</b> icon in the toolbar (pin it from the puzzle-piece menu if you don\'t see it).</li><li>Choose the <b>JSON</b> format and click <b>Export my data</b> — everything runs in your browser, nothing is uploaded.</li><li>You get a separate file for series and for movies (or a ZIP with both). Drop those files here.</li>',
     keyPlaceholder: 'Paste your TMDB API key here',
     dropStrong: 'Drag your JSON files here',
-    dropSub: 'or click to pick them — series and/or movies, detected automatically',
+    dropSub: 'or click to pick them — series, movies and/or lists (even the whole ZIP), detected automatically',
     fixBtn: 'Fix',
     outputNote: 'The output keeps the same schema as the original export (plus <code>tmdb_id</code> and <code>air_date</code>), so it stays importable anywhere.',
     footer: 'Made by <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">Source on GitHub</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'TV series', kMovies: 'movies', kBad: 'invalid',
+    kSeries: 'TV series', kMovies: 'movies', kBad: 'invalid', kLists: 'lists',
     download: 'Download', done: 'Done.',
+    missingNote: 'Not loaded: %s — that\'s fine, they will simply be skipped.',
+    listsNoSeriesCtx: 'Note: without the series file in the same run, lumped series in lists cannot be detected and split.',
+    n_resolved: 'resolved', n_splitAdded: 'added from split', n_unresolved: 'unchanged',
     n_aligned: 'aligned', n_remapped: 'remapped', n_preserved: 'preserved',
     n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-tmdb-episodes', n_updated: 'updated', n_error: 'error', n_split: 'split',
   },
@@ -142,12 +147,15 @@ const T = {
     exportHelpSteps: '<li>Installa l\'estensione gratuita <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> dal Chrome Web Store.</li><li>Apri <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> e accedi al tuo account TV Time.</li><li>Clicca l\'icona <b>TV Time Out by Refract</b> nella barra degli strumenti (se non la vedi, fissala dal menu a forma di puzzle).</li><li>Scegli il formato <b>JSON</b> e clicca <b>Export my data</b> — tutto avviene nel tuo browser, non viene caricato nulla.</li><li>Ottieni un file separato per le serie e uno per i film (o uno ZIP con entrambi). Trascina quei file qui.</li>',
     keyPlaceholder: 'Incolla qui la tua API key TMDB',
     dropStrong: 'Trascina qui i tuoi file JSON',
-    dropSub: 'o clicca per sceglierli — series e/o movies, riconosciuti in automatico',
+    dropSub: 'o clicca per sceglierli — serie, film e/o liste (anche lo ZIP intero), riconosciuti in automatico',
     fixBtn: 'Correggi',
     outputNote: "L'output mantiene lo stesso schema dell'export originale (più <code>tmdb_id</code> e <code>air_date</code>), quindi resta importabile ovunque.",
     footer: 'Creato da <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">Codice su GitHub</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'serie TV', kMovies: 'film', kBad: 'non valido',
+    kSeries: 'serie TV', kMovies: 'film', kBad: 'non valido', kLists: 'liste',
     download: 'Scarica', done: 'Fatto.',
+    missingNote: 'Non caricati: %s — va bene così, verranno semplicemente saltati.',
+    listsNoSeriesCtx: 'Nota: senza il file delle serie nella stessa esecuzione, le serie accorpate nelle liste non possono essere rilevate e divise.',
+    n_resolved: 'risolti', n_splitAdded: 'aggiunti da divisione', n_unresolved: 'invariati',
     n_aligned: 'allineata', n_remapped: 'rimappata', n_preserved: 'conservata',
     n_noTmdb: 'no-tmdb', n_noEpisodes: 'no-episodi-tmdb', n_updated: 'aggiornato', n_error: 'errore', n_split: 'divisa',
   },
@@ -160,12 +168,15 @@ const T = {
     exportHelpSteps: '<li>Instala la extensión gratuita <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> desde la Chrome Web Store.</li><li>Abre <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> e inicia sesión en tu cuenta de TV Time.</li><li>Haz clic en el icono <b>TV Time Out by Refract</b> de la barra de herramientas (si no lo ves, fíjalo desde el menú con forma de pieza de puzle).</li><li>Elige el formato <b>JSON</b> y haz clic en <b>Export my data</b> — todo se ejecuta en tu navegador, no se sube nada.</li><li>Obtienes un archivo aparte para las series y otro para las películas (o un ZIP con ambos). Arrastra esos archivos aquí.</li>',
     keyPlaceholder: 'Pega aquí tu clave API de TMDB',
     dropStrong: 'Arrastra aquí tus archivos JSON',
-    dropSub: 'o haz clic para elegirlos — series y/o películas, detectados automáticamente',
+    dropSub: 'o haz clic para elegirlos — series, películas y/o listas (incluso el ZIP entero), detectados automáticamente',
     fixBtn: 'Corregir',
     outputNote: 'La salida conserva el mismo esquema que la exportación original (más <code>tmdb_id</code> y <code>air_date</code>), así que sigue siendo importable en cualquier lugar.',
     footer: 'Creado por <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">Código en GitHub</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'series', kMovies: 'películas', kBad: 'no válido',
+    kSeries: 'series', kMovies: 'películas', kBad: 'no válido', kLists: 'listas',
     download: 'Descargar', done: 'Listo.',
+    missingNote: 'No cargados: %s — no pasa nada, simplemente se omitirán.',
+    listsNoSeriesCtx: 'Nota: sin el archivo de series en la misma ejecución, las series agrupadas en las listas no pueden detectarse ni dividirse.',
+    n_resolved: 'resueltos', n_splitAdded: 'añadidos por división', n_unresolved: 'sin cambios',
     n_aligned: 'alineada', n_remapped: 'remapeada', n_preserved: 'conservada',
     n_noTmdb: 'sin-tmdb', n_noEpisodes: 'sin-episodios-tmdb', n_updated: 'actualizada', n_error: 'error', n_split: 'dividida',
   },
@@ -178,12 +189,15 @@ const T = {
     exportHelpSteps: '<li>Installez l\'extension gratuite <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> depuis le Chrome Web Store.</li><li>Ouvrez <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> et connectez-vous à votre compte TV Time.</li><li>Cliquez sur l\'icône <b>TV Time Out by Refract</b> dans la barre d\'outils (si vous ne la voyez pas, épinglez-la depuis le menu en forme de pièce de puzzle).</li><li>Choisissez le format <b>JSON</b> et cliquez sur <b>Export my data</b> — tout s\'exécute dans votre navigateur, rien n\'est envoyé.</li><li>Vous obtenez un fichier distinct pour les séries et un pour les films (ou un ZIP avec les deux). Glissez ces fichiers ici.</li>',
     keyPlaceholder: 'Collez ici votre clé API TMDB',
     dropStrong: 'Glissez vos fichiers JSON ici',
-    dropSub: 'ou cliquez pour les choisir — séries et/ou films, détectés automatiquement',
+    dropSub: 'ou cliquez pour les choisir — séries, films et/ou listes (même le ZIP entier), détectés automatiquement',
     fixBtn: 'Corriger',
     outputNote: "La sortie conserve le même schéma que l'export original (plus <code>tmdb_id</code> et <code>air_date</code>), elle reste donc importable partout.",
     footer: 'Créé par <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">Code sur GitHub</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'séries', kMovies: 'films', kBad: 'invalide',
+    kSeries: 'séries', kMovies: 'films', kBad: 'invalide', kLists: 'listes',
     download: 'Télécharger', done: 'Terminé.',
+    missingNote: 'Non chargés : %s — pas de souci, ils seront simplement ignorés.',
+    listsNoSeriesCtx: 'Note : sans le fichier des séries dans la même exécution, les séries regroupées dans les listes ne peuvent pas être détectées ni séparées.',
+    n_resolved: 'résolus', n_splitAdded: 'ajoutés par séparation', n_unresolved: 'inchangés',
     n_aligned: 'alignée', n_remapped: 'remappée', n_preserved: 'conservée',
     n_noTmdb: 'sans-tmdb', n_noEpisodes: 'sans-épisodes-tmdb', n_updated: 'mise à jour', n_error: 'erreur', n_split: 'divisée',
   },
@@ -196,12 +210,15 @@ const T = {
     exportHelpSteps: '<li>Installiere die kostenlose Erweiterung <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> aus dem Chrome Web Store.</li><li>Öffne <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> und melde dich bei deinem TV-Time-Konto an.</li><li>Klicke auf das Symbol <b>TV Time Out by Refract</b> in der Symbolleiste (falls du es nicht siehst, pinne es über das Puzzleteil-Menü).</li><li>Wähle das Format <b>JSON</b> und klicke auf <b>Export my data</b> — alles läuft in deinem Browser, es wird nichts hochgeladen.</li><li>Du erhältst je eine Datei für Serien und für Filme (oder ein ZIP mit beiden). Ziehe diese Dateien hierher.</li>',
     keyPlaceholder: 'Füge hier deinen TMDB-API-Schlüssel ein',
     dropStrong: 'Ziehe deine JSON-Dateien hierher',
-    dropSub: 'oder klicke, um sie auszuwählen — Serien und/oder Filme, automatisch erkannt',
+    dropSub: 'oder klicke, um sie auszuwählen — Serien, Filme und/oder Listen (auch das ganze ZIP), automatisch erkannt',
     fixBtn: 'Korrigieren',
     outputNote: 'Die Ausgabe behält dasselbe Schema wie der ursprüngliche Export (plus <code>tmdb_id</code> und <code>air_date</code>) und bleibt daher überall importierbar.',
     footer: 'Erstellt von <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">Quellcode auf GitHub</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'Serien', kMovies: 'Filme', kBad: 'ungültig',
+    kSeries: 'Serien', kMovies: 'Filme', kBad: 'ungültig', kLists: 'Listen',
     download: 'Herunterladen', done: 'Fertig.',
+    missingNote: 'Nicht geladen: %s — kein Problem, sie werden einfach übersprungen.',
+    listsNoSeriesCtx: 'Hinweis: Ohne die Seriendatei im selben Durchlauf können zusammengefasste Serien in Listen nicht erkannt und aufgeteilt werden.',
+    n_resolved: 'aufgelöst', n_splitAdded: 'durch Aufteilung ergänzt', n_unresolved: 'unverändert',
     n_aligned: 'ausgerichtet', n_remapped: 'neu zugeordnet', n_preserved: 'beibehalten',
     n_noTmdb: 'kein-tmdb', n_noEpisodes: 'keine-tmdb-episoden', n_updated: 'aktualisiert', n_error: 'Fehler', n_split: 'aufgeteilt',
   },
@@ -214,12 +231,15 @@ const T = {
     exportHelpSteps: '<li>Instale a extensão gratuita <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> a partir da Chrome Web Store.</li><li>Abra <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> e inicie sessão na sua conta TV Time.</li><li>Clique no ícone <b>TV Time Out by Refract</b> na barra de ferramentas (se não o vir, fixe-o a partir do menu em forma de peça de puzzle).</li><li>Escolha o formato <b>JSON</b> e clique em <b>Export my data</b> — tudo corre no seu navegador, nada é enviado.</li><li>Recebe um ficheiro separado para as séries e outro para os filmes (ou um ZIP com ambos). Arraste esses ficheiros para aqui.</li>',
     keyPlaceholder: 'Cole aqui a sua chave API do TMDB',
     dropStrong: 'Arraste os seus ficheiros JSON para aqui',
-    dropSub: 'ou clique para os escolher — séries e/ou filmes, detetados automaticamente',
+    dropSub: 'ou clique para os escolher — séries, filmes e/ou listas (até o ZIP inteiro), detetados automaticamente',
     fixBtn: 'Corrigir',
     outputNote: 'A saída mantém o mesmo esquema da exportação original (mais <code>tmdb_id</code> e <code>air_date</code>), pelo que continua importável em qualquer lugar.',
     footer: 'Criado por <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">Código no GitHub</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'séries', kMovies: 'filmes', kBad: 'inválido',
+    kSeries: 'séries', kMovies: 'filmes', kBad: 'inválido', kLists: 'listas',
     download: 'Descarregar', done: 'Concluído.',
+    missingNote: 'Não carregados: %s — tudo bem, serão simplesmente ignorados.',
+    listsNoSeriesCtx: 'Nota: sem o ficheiro das séries na mesma execução, as séries agrupadas nas listas não podem ser detetadas nem separadas.',
+    n_resolved: 'resolvidos', n_splitAdded: 'adicionados por separação', n_unresolved: 'inalterados',
     n_aligned: 'alinhada', n_remapped: 'remapeada', n_preserved: 'conservada',
     n_noTmdb: 'sem-tmdb', n_noEpisodes: 'sem-episódios-tmdb', n_updated: 'atualizada', n_error: 'erro', n_split: 'dividida',
   },
@@ -232,12 +252,15 @@ const T = {
     exportHelpSteps: '<li>Chrome ウェブストアから無料の拡張機能 <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a> をインストールします。</li><li><a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> を開き、TV Time アカウントにログインします。</li><li>ツールバーの <b>TV Time Out by Refract</b> アイコンをクリックします（表示されない場合はパズルピースのメニューから固定します）。</li><li><b>JSON</b> 形式を選び、<b>Export my data</b> をクリックします — すべてブラウザ内で処理され、アップロードはされません。</li><li>ドラマ用と映画用に別々のファイル（または両方入りの ZIP）が得られます。そのファイルをここにドラッグします。</li>',
     keyPlaceholder: 'TMDB API キーをここに貼り付け',
     dropStrong: 'JSON ファイルをここにドラッグ',
-    dropSub: 'またはクリックして選択 — シリーズや映画を自動判別します',
+    dropSub: 'またはクリックして選択 — シリーズ・映画・リスト（ZIP ごとでも可）を自動判別します',
     fixBtn: '修正',
     outputNote: '出力は元のエクスポートと同じスキーマ（<code>tmdb_id</code> と <code>air_date</code> を追加）を保つため、どこでもインポートできます。',
     footer: '制作: <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">GitHub でソースを見る</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: 'ドラマ', kMovies: '映画', kBad: '無効',
+    kSeries: 'ドラマ', kMovies: '映画', kBad: '無効', kLists: 'リスト',
     download: 'ダウンロード', done: '完了。',
+    missingNote: '未読み込み: %s — 問題ありません。単にスキップされます。',
+    listsNoSeriesCtx: '注: 同じ実行にシリーズのファイルがない場合、リスト内の統合されたシリーズを検出・分割できません。',
+    n_resolved: '解決', n_splitAdded: '分割で追加', n_unresolved: '変更なし',
     n_aligned: '整合', n_remapped: '再マッピング', n_preserved: '保持',
     n_noTmdb: 'TMDBなし', n_noEpisodes: 'TMDBエピソードなし', n_updated: '更新', n_error: 'エラー', n_split: '分割',
   },
@@ -250,12 +273,15 @@ const T = {
     exportHelpSteps: '<li>从 Chrome 应用商店安装免费扩展 <a href="https://chromewebstore.google.com/detail/tv-time-out-by-refract/pmejpdpjbkjklfceogdkolmgclldogbi" target="_blank" rel="noopener">TV Time Out by Refract</a>。</li><li>打开 <a href="https://app.tvtime.com" target="_blank" rel="noopener">app.tvtime.com</a> 并登录你的 TV Time 账号。</li><li>点击工具栏中的 <b>TV Time Out by Refract</b> 图标（如果看不到，从拼图图标菜单里固定它）。</li><li>选择 <b>JSON</b> 格式并点击 <b>Export my data</b> — 全部在你的浏览器中运行，不会上传任何内容。</li><li>你会得到剧集和电影各一个文件（或包含两者的 ZIP）。把这些文件拖到这里。</li>',
     keyPlaceholder: '在此粘贴你的 TMDB API 密钥',
     dropStrong: '将 JSON 文件拖到这里',
-    dropSub: '或点击选择 — 自动识别剧集和/或电影',
+    dropSub: '或点击选择 — 自动识别剧集、电影和/或片单（也可以直接拖整个 ZIP）',
     fixBtn: '修复',
     outputNote: '输出保持与原始导出相同的结构（额外增加 <code>tmdb_id</code> 和 <code>air_date</code>），因此仍可随处导入。',
     footer: '作者 <a href="https://github.com/kaen89" target="_blank" rel="noopener">kaen89</a> · <a href="https://github.com/kaen89/tvtime-export-fix" target="_blank" rel="noopener">在 GitHub 查看源码</a><br>This product uses the TMDB API but is not endorsed or certified by <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>.',
-    kSeries: '剧集', kMovies: '电影', kBad: '无效',
+    kSeries: '剧集', kMovies: '电影', kBad: '无效', kLists: '片单',
     download: '下载', done: '完成。',
+    missingNote: '未加载：%s — 没关系，它们会被跳过。',
+    listsNoSeriesCtx: '注意：同一次运行中若没有剧集文件，将无法检测并拆分片单中被合并的剧集。',
+    n_resolved: '已解析', n_splitAdded: '因拆分新增', n_unresolved: '未变',
     n_aligned: '已对齐', n_remapped: '已重映射', n_preserved: '已保留',
     n_noTmdb: '无-tmdb', n_noEpisodes: '无-tmdb-剧集', n_updated: '已更新', n_error: '错误', n_split: '已拆分',
   },
@@ -276,17 +302,68 @@ function applyLang() {
 $('#lang').onchange = () => { lang = $('#lang').value; localStorage.setItem('ui_lang', lang); applyLang() }
 
 // --- File intake -------------------------------------------------------------
-const loaded = [] // { name, kind: 'series'|'movies'|'bad', data }
+const loaded = [] // { name, kind: 'series'|'movies'|'lists'|'bad', data }
 function detectKind(data) {
   if (!Array.isArray(data) || !data.length) return 'bad'
   const s = data[0]
   if (Array.isArray(s?.seasons)) return 'series'
+  if (Array.isArray(s?.items) && 'name' in s) return 'lists'
   if ('title' in s && 'year' in s && !('seasons' in s)) return 'movies'
   return 'bad'
+}
+// Minimal ZIP reader (no dependencies): central directory scan + native
+// DecompressionStream for deflate. Enough for Refract's export bundles.
+async function unzip(buf) {
+  const u8 = new Uint8Array(buf), dv = new DataView(buf)
+  let eocd = -1
+  for (let i = u8.length - 22; i >= Math.max(0, u8.length - 22 - 65536); i--) {
+    if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break }
+  }
+  if (eocd < 0) throw new Error('EOCD not found')
+  const count = dv.getUint16(eocd + 10, true)
+  let off = dv.getUint32(eocd + 16, true)
+  const files = []
+  for (let n = 0; n < count; n++) {
+    if (dv.getUint32(off, true) !== 0x02014b50) break
+    const method = dv.getUint16(off + 10, true)
+    const csize = dv.getUint32(off + 20, true)
+    const nameLen = dv.getUint16(off + 28, true)
+    const extraLen = dv.getUint16(off + 30, true)
+    const commentLen = dv.getUint16(off + 32, true)
+    const localOff = dv.getUint32(off + 42, true)
+    const name = new TextDecoder().decode(u8.subarray(off + 46, off + 46 + nameLen))
+    files.push({ name, method, csize, localOff })
+    off += 46 + nameLen + extraLen + commentLen
+  }
+  const out = []
+  for (const f of files) {
+    if (!/\.json$/i.test(f.name) || f.name.endsWith('/')) continue
+    const lNameLen = dv.getUint16(f.localOff + 26, true)
+    const lExtraLen = dv.getUint16(f.localOff + 28, true)
+    const start = f.localOff + 30 + lNameLen + lExtraLen
+    const raw = u8.subarray(start, start + f.csize)
+    let bytes
+    if (f.method === 0) bytes = raw
+    else if (f.method === 8) {
+      const ds = new DecompressionStream('deflate-raw')
+      bytes = new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(ds)).arrayBuffer())
+    } else continue
+    out.push({ name: f.name.split('/').pop(), text: new TextDecoder().decode(bytes) })
+  }
+  return out
 }
 async function addFiles(fileList) {
   for (const f of fileList) {
     try {
+      if (/\.zip$/i.test(f.name) || f.type === 'application/zip') {
+        for (const entry of await unzip(await f.arrayBuffer())) {
+          try {
+            const data = JSON.parse(entry.text)
+            loaded.push({ name: entry.name, kind: detectKind(data), data })
+          } catch { loaded.push({ name: entry.name, kind: 'bad', data: null }) }
+        }
+        continue
+      }
       const data = JSON.parse(await f.text())
       loaded.push({ name: f.name, kind: detectKind(data), data })
     } catch {
@@ -300,13 +377,22 @@ function renderFiles() {
   loaded.forEach((f, i) => {
     const el = document.createElement('div')
     el.className = 'file'
-    const label = f.kind === 'series' ? t('kSeries') : f.kind === 'movies' ? t('kMovies') : t('kBad')
+    const label = f.kind === 'series' ? t('kSeries') : f.kind === 'movies' ? t('kMovies') : f.kind === 'lists' ? t('kLists') : t('kBad')
     el.innerHTML = `<span class="tag ${f.kind}">${label}</span><span>${f.name}</span>`
     const x = document.createElement('button'); x.textContent = '×'
     x.onclick = () => { loaded.splice(i, 1); renderFiles(); refresh() }
     el.append(x)
     $('#files').append(el)
   })
+  // Informational (never blocking): which of the three kinds are not loaded.
+  const have = new Set(loaded.map((f) => f.kind))
+  const missing = [['series', 'kSeries'], ['movies', 'kMovies'], ['lists', 'kLists']]
+    .filter(([k]) => !have.has(k)).map(([, key]) => t(key))
+  const note = $('#missing')
+  if (loaded.some((f) => f.kind !== 'bad') && missing.length) {
+    note.textContent = t('missingNote').replace('%s', missing.join(', '))
+    note.style.display = 'block'
+  } else note.style.display = 'none'
 }
 function refresh() {
   const ok = loaded.some((f) => f.kind !== 'bad') && $('#key').value.trim().length > 8
@@ -595,13 +681,15 @@ async function fixSeries(serie) {
     const r = alignToCanonical(promoted.sort(sortEps), show?.canonical || [])
     outSeries.push(withSeasons(serie, bestId, r.episodes, specials))
   }
+  const splits = []
   for (const [sid, eps] of foreignByShow) {
     const show = await getShow(sid)
     if (!show) continue
     const r = alignToCanonical(eps.sort(sortEps), show.canonical)
     outSeries.push(withSeasons(splitBase(show), sid, r.episodes, []))
+    splits.push({ tvdb: show.tvdb ?? null, tmdb_id: sid, title: show.name })
   }
-  return { series: outSeries, movies, note: 'split', extra: ` (${outSeries.map((s) => s.title).join(' + ')})` }
+  return { series: outSeries, movies, splits, note: 'split', extra: ` (${outSeries.map((s) => s.title).join(' + ')})` }
 }
 
 // --- Movies logic ------------------------------------------------------------
@@ -624,12 +712,67 @@ async function fixMovie(m) {
   return { movie: { ...m, tmdb_id: id, year, release_date: det.release_date || null }, note: 'updated' }
 }
 
+// --- Lists logic ---------------------------------------------------------------
+// Lists reference series by tvdb_id and movies by uuid (matching the movies
+// file). Items are enriched with tmdb_id; series the fix detached get added as
+// new items right after the original. Unresolved items stay untouched.
+const listSeriesCache = new Map(), listMovieCache = new Map()
+async function listSeriesTmdb(tvdbId) {
+  if (!listSeriesCache.has(tvdbId)) {
+    const d = await tmdb(`/find/${tvdbId}`, `&external_source=tvdb_id`)
+    listSeriesCache.set(tvdbId, d?.tv_results?.[0]?.id ?? null)
+  }
+  return listSeriesCache.get(tvdbId)
+}
+async function listMovieTmdb(name) {
+  if (!name) return null
+  if (!listMovieCache.has(name)) {
+    const s = await tmdb('/search/movie', `&query=${encodeURIComponent(name)}`)
+    let id = null
+    for (const hit of (s?.results || []).slice(0, 5)) {
+      if (tokenOverlap(name, hit.title) >= 0.5 || tokenOverlap(name, hit.original_title) >= 0.5) { id = hit.id; break }
+    }
+    listMovieCache.set(name, id)
+  }
+  return listMovieCache.get(name)
+}
+async function fixList(list, ctx, onItem) {
+  const items = []
+  let resolved = 0, splitAdded = 0, unresolved = 0
+  const presentTvdb = new Set((list.items || []).filter((i) => i.type === 'series').map((i) => i.tvdb_id))
+  for (const item of list.items || []) {
+    const it = { ...item }
+    if (item.type === 'series' && item.tvdb_id) {
+      const tid = ctx.tvdbToTmdb.get(item.tvdb_id) ?? await listSeriesTmdb(item.tvdb_id)
+      if (tid) { it.tmdb_id = tid; resolved++ } else unresolved++
+      items.push(it)
+      for (const s of ctx.splitMap.get(item.tvdb_id) || []) {
+        if (s.tvdb && presentTvdb.has(s.tvdb)) continue
+        items.push({ type: 'series', tvdb_id: s.tvdb ?? null, name: s.title, custom_order: 0, tmdb_id: s.tmdb_id })
+        if (s.tvdb) presentTvdb.add(s.tvdb)
+        splitAdded++
+      }
+    } else if (item.type === 'movie') {
+      const tid = ctx.movieUuidToTmdb.get(item.uuid) ?? await listMovieTmdb(item.name)
+      if (tid) { it.tmdb_id = tid; resolved++ } else unresolved++
+      items.push(it)
+    } else { items.push(it); unresolved++ }
+    onItem?.()
+  }
+  items.forEach((it, i) => { it.custom_order = i })
+  return { list: { ...list, items }, resolved, splitAdded, unresolved }
+}
+
 // --- Run ---------------------------------------------------------------------
 $('#go').onclick = async () => {
   KEY = $('#key').value.trim()
-  const jobs = loaded.filter((f) => f.kind !== 'bad')
-  const total = jobs.reduce((n, f) => n + f.data.length, 0)
+  const KIND_ORDER = { series: 0, movies: 1, lists: 2 }
+  // Series → movies → lists: lists reuse what the earlier fixes resolved.
+  const jobs = loaded.filter((f) => f.kind !== 'bad').sort((a, b) => KIND_ORDER[a.kind] - KIND_ORDER[b.kind])
+  const total = jobs.reduce((n, f) => n + (f.kind === 'lists' ? f.data.reduce((m, l) => m + (l.items?.length || 0), 0) : f.data.length), 0)
   let done = 0
+  // Context collected while fixing series/movies, consumed by the lists fix.
+  const ctx = { tvdbToTmdb: new Map(), splitMap: new Map(), movieUuidToTmdb: new Map() }
   logBox.innerHTML = ''; $('#dl').innerHTML = ''; $('#dl').style.display = 'none'
   $('#go').disabled = true; progress(0, total)
 
@@ -646,15 +789,35 @@ $('#go').onclick = async () => {
   const results = []      // { f, out }
   const extraMovies = []  // film estratti dagli special delle serie
   for (const f of jobs) {
-    log(`\n▶ ${f.name}  (${f.data.length} ${f.kind === 'series' ? t('kSeries') : t('kMovies')})`)
+    const kindLabel = f.kind === 'series' ? t('kSeries') : f.kind === 'movies' ? t('kMovies') : t('kLists')
+    log(`\n▶ ${f.name}  (${f.data.length} ${kindLabel})`)
     const out = [], notes = {}
+    if (f.kind === 'lists') {
+      if (!jobs.some((j) => j.kind === 'series')) log(`  ${t('listsNoSeriesCtx')}`, 'c-warn')
+      for (const list of f.data) {
+        let r
+        try { r = await fixList(list, ctx, () => { done++; progress(done, total) }) }
+        catch { r = { list, resolved: 0, splitAdded: 0, unresolved: (list.items || []).length } }
+        out.push(r.list)
+        const cls = r.resolved || r.splitAdded ? 'c-ok' : 'c-warn'
+        log(`  ${list.name}: ${r.resolved} ${t('n_resolved')}, ${r.splitAdded} ${t('n_splitAdded')}, ${r.unresolved} ${t('n_unresolved')}`, cls)
+      }
+      results.push({ f, out })
+      continue
+    }
     for (const item of f.data) {
       let title, note, extra = ''
       try {
         if (f.kind === 'series') {
           const r = await fixSeries(item); out.push(...r.series); title = r.series[0].title; note = r.note; extra = r.extra || ''
+          if (item.id?.tvdb && r.series[0]?.tmdb_id) ctx.tvdbToTmdb.set(item.id.tvdb, r.series[0].tmdb_id)
+          for (const s of r.series.slice(1)) if (s.id?.tvdb && s.tmdb_id) ctx.tvdbToTmdb.set(s.id.tvdb, s.tmdb_id)
+          if (item.id?.tvdb && r.splits?.length) ctx.splitMap.set(item.id.tvdb, r.splits)
           if (r.movies?.length) { extraMovies.push(...r.movies); extra += ` [+${r.movies.length} 🎬 ${r.movies.map((m) => m.title).join(', ')}]` }
-        } else { const r = await fixMovie(item); out.push(r.movie); title = r.movie.title; note = r.note }
+        } else {
+          const r = await fixMovie(item); out.push(r.movie); title = r.movie.title; note = r.note
+          if (item.uuid && r.movie.tmdb_id) ctx.movieUuidToTmdb.set(item.uuid, r.movie.tmdb_id)
+        }
       } catch { out.push(item); title = item.title; note = 'error' }
       notes[note] = (notes[note] || 0) + 1
       const cls = note === 'noTmdb' || note === 'noEpisodes' || note === 'error' ? 'c-warn'
