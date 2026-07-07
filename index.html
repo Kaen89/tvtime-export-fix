@@ -511,6 +511,18 @@ function progress(done, total) {
 // --- TMDB client -------------------------------------------------------------
 let KEY = ''
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+// Run fn over items with at most `limit` in flight; results keep input order.
+// The whole pipeline is network-bound on TMDB, so this is where the time goes.
+async function mapPool(items, limit, fn) {
+  const out = new Array(items.length)
+  let i = 0
+  const worker = async () => {
+    while (i < items.length) { const idx = i++; out[idx] = await fn(items[idx], idx) }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker))
+  return out
+}
+const CONCURRENCY = 8
 async function tmdb(path, params = '') {
   for (let tries = 0; tries < 3; tries++) {
     let res
@@ -606,9 +618,11 @@ async function fetchShow(tmdbId) {
   const ext = await tmdb(`/tv/${tmdbId}/external_ids`)
   return { canonical, name: show.name, tvdb: ext?.tvdb_id ?? null, imdb: ext?.imdb_id ?? null }
 }
+// Cache the promise (not the resolved value) so concurrent callers dedupe
+// on the in-flight request instead of both firing it.
 const showCache = new Map()
-async function getShow(tmdbId) {
-  if (!showCache.has(tmdbId)) showCache.set(tmdbId, await fetchShow(tmdbId))
+function getShow(tmdbId) {
+  if (!showCache.has(tmdbId)) showCache.set(tmdbId, fetchShow(tmdbId))
   return showCache.get(tmdbId)
 }
 // Some "specials" are actually feature films (e.g. "BLUE LOCK IL FILM -EPISODIO
@@ -830,22 +844,23 @@ async function fixMovie(m) {
 // file). Items are enriched with tmdb_id; series the fix detached get added as
 // new items right after the original. Unresolved items stay untouched.
 const listSeriesCache = new Map(), listMovieCache = new Map()
-async function listSeriesTmdb(tvdbId) {
+function listSeriesTmdb(tvdbId) {
   if (!listSeriesCache.has(tvdbId)) {
-    const d = await tmdb(`/find/${tvdbId}`, `&external_source=tvdb_id`)
-    listSeriesCache.set(tvdbId, d?.tv_results?.[0]?.id ?? null)
+    listSeriesCache.set(tvdbId, tmdb(`/find/${tvdbId}`, `&external_source=tvdb_id`)
+      .then((d) => d?.tv_results?.[0]?.id ?? null))
   }
   return listSeriesCache.get(tvdbId)
 }
-async function listMovieTmdb(name) {
+function listMovieTmdb(name) {
   if (!name) return null
   if (!listMovieCache.has(name)) {
-    const s = await tmdb('/search/movie', `&query=${encodeURIComponent(name)}`)
-    let id = null
-    for (const hit of (s?.results || []).slice(0, 5)) {
-      if (tokenOverlap(name, hit.title) >= 0.5 || tokenOverlap(name, hit.original_title) >= 0.5) { id = hit.id; break }
-    }
-    listMovieCache.set(name, id)
+    listMovieCache.set(name, (async () => {
+      const s = await tmdb('/search/movie', `&query=${encodeURIComponent(name)}`)
+      for (const hit of (s?.results || []).slice(0, 5)) {
+        if (tokenOverlap(name, hit.title) >= 0.5 || tokenOverlap(name, hit.original_title) >= 0.5) return hit.id
+      }
+      return null
+    })())
   }
   return listMovieCache.get(name)
 }
@@ -1020,23 +1035,25 @@ $('#go').onclick = async () => {
     const out = [], notes = {}
     if (f.kind === 'lists') {
       if (!jobs.some((j) => j.kind === 'series')) log(`  ${t('listsNoSeriesCtx')}`, 'c-warn')
-      for (const list of f.data) {
+      const lists = await mapPool(f.data, CONCURRENCY, async (list) => {
         let r
         try { r = await fixList(list, ctx, () => { done++; progress(done, total) }) }
         catch { r = { list, resolved: 0, splitAdded: 0, splitTitles: [], unresolved: (list.items || []).length } }
-        out.push(r.list)
         report.push({ kind: 'lists', file: f.name, title: list.name, items: r.list.items.length, resolved: r.resolved, splitAdded: r.splitAdded, splitTitles: r.splitTitles || [], unresolved: r.unresolved })
         const cls = r.resolved || r.splitAdded ? 'c-ok' : 'c-warn'
         log(`  ${list.name}: ${r.resolved} ${t('n_resolved')}, ${r.splitAdded} ${t('n_splitAdded')}, ${r.unresolved} ${t('n_unresolved')}`, cls)
-      }
+        return r.list
+      })
+      out.push(...lists)
       results.push({ f, out })
       continue
     }
-    for (const item of f.data) {
+    const chunks = await mapPool(f.data, CONCURRENCY, async (item) => {
+      const entries = []
       let title, note, extra = ''
       try {
         if (f.kind === 'series') {
-          const r = await fixSeries(item); out.push(...r.series); title = r.series[0].title; note = r.note; extra = r.extra || ''
+          const r = await fixSeries(item); entries.push(...r.series); title = r.series[0].title; note = r.note; extra = r.extra || ''
           if (item.id?.tvdb && r.series[0]?.tmdb_id) ctx.tvdbToTmdb.set(item.id.tvdb, r.series[0].tmdb_id)
           for (const s of r.series.slice(1)) if (s.id?.tvdb && s.tmdb_id) ctx.tvdbToTmdb.set(s.id.tvdb, s.tmdb_id)
           if (item.id?.tvdb && r.splits?.length) ctx.splitMap.set(item.id.tvdb, r.splits)
@@ -1048,12 +1065,12 @@ $('#go').onclick = async () => {
             dupes: r.dupes || 0, splitInto: r.series.slice(1).map((s) => s.title),
             extractedMovies: (r.movies || []).map((m) => m.title), tmdbId: r.series[0].tmdb_id ?? null })
         } else {
-          const r = await fixMovie(item); out.push(r.movie); title = r.movie.title; note = r.note
+          const r = await fixMovie(item); entries.push(r.movie); title = r.movie.title; note = r.note
           if (item.uuid && r.movie.tmdb_id) ctx.movieUuidToTmdb.set(item.uuid, r.movie.tmdb_id)
           report.push({ kind: 'movies', file: f.name, title, note, year: r.movie.year ?? null, release: r.movie.release_date ?? null, tmdbId: r.movie.tmdb_id ?? null })
         }
       } catch {
-        out.push(item); title = item.title; note = 'error'
+        entries.push(item); title = item.title; note = 'error'
         const c = countEpisodes([item])
         report.push(f.kind === 'series'
           ? { kind: 'series', file: f.name, title, note, extra: '', epBefore: c.episodes, epAfter: c.episodes, watchedBefore: c.watched, watchedAfter: c.watched, dupes: 0, splitInto: [], extractedMovies: [], tmdbId: null }
@@ -1066,7 +1083,9 @@ $('#go').onclick = async () => {
       done++; progress(done, total)
       const label = t('n_' + note)
       log(`  ${String(done).padStart(4)}/${total}  ${(label + extra).padEnd(24)} ${title}`, cls)
-    }
+      return entries
+    })
+    for (const c of chunks) out.push(...c)
     log(`  ↳ ${JSON.stringify(notes)}`, 'c-ok')
     results.push({ f, out })
   }
