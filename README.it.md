@@ -52,6 +52,12 @@ Per ogni serie dell'export interroga TMDB e:
 Anche i film vengono abbinati a TMDB, guadagnando `tmdb_id` e una
 `release_date` corretta.
 
+Anche le **liste** custom vengono sistemate: ogni elemento guadagna un
+`tmdb_id` (serie risolte tramite il loro TVDB id, film incrociati per `uuid`
+col file dei film, o cercati per nome su TMDB), e quando una serie accorpata
+viene divisa, le serie staccate vengono aggiunte alla lista subito dopo
+l'originale. Gli elementi non risolti restano intatti.
+
 L'output mantiene **lo stesso schema** dell'export originale (più `tmdb_id` e
 `air_date`), così resta importabile ovunque.
 
@@ -70,7 +76,8 @@ TV Time non ha un export ufficiale. Usa l'estensione Chrome gratuita
 1. Installa l'estensione.
 2. Apri [app.tvtime.com](https://app.tvtime.com) ed effettua l'accesso.
 3. Clicca sull'icona dell'estensione e scegli il formato **JSON**.
-4. Premi **Export my data** — otterrai un file per le serie e uno per i film.
+4. Premi **Export my data** — ottieni i file di serie, film e liste (o un
+   unico ZIP con tutto).
 
 ### 2. Ottieni una chiave API TMDB gratuita
 
@@ -91,19 +98,10 @@ La chiave viene conservata solo nel tuo browser (`localStorage`).
 ### 3. Fix
 
 Apri il tool, incolla la tua chiave, trascina i tuoi file JSON nella zona di
-drop (serie e/o film, rilevati automaticamente) e clicca **Fix**. Al termine,
+drop — serie, film e/o liste, rilevati automaticamente, oppure direttamente
+l'intero **ZIP** di Refract — e clicca **Fix**. Basta uno qualsiasi dei tre
+file; il tool segnala quali mancano e semplicemente li salta. Al termine,
 scarica i file `-fixed.json`.
-
----
-
-## Eseguirlo
-
-È un singolo `index.html` autosufficiente — nessuna build, nessuna
-dipendenza.
-
-- **In locale:** basta aprire `index.html` nel browser.
-- **Hosting:** abilita **GitHub Pages** su questo repo (Settings → Pages →
-  deploy dal branch di default, root). Il tool viene servito così com'è.
 
 ---
 

@@ -50,6 +50,12 @@ For every series in the export it queries TMDB and:
 Movies get matched to TMDB too, gaining `tmdb_id` and a corrected
 `release_date`.
 
+Custom **lists** are fixed as well: every list item gains a `tmdb_id` (series
+resolved via their TVDB id, movies cross-referenced by `uuid` with the movies
+file, or looked up by name on TMDB), and when a lumped-together series gets
+split, the detached series are added to the list right after the original.
+Unresolved items are left untouched.
+
 The output keeps the **same schema** as the original export (plus `tmdb_id` and
 `air_date`), so it stays importable anywhere.
 
@@ -68,7 +74,8 @@ TV Time has no official export. Use the free Chrome extension
 1. Install the extension.
 2. Open [app.tvtime.com](https://app.tvtime.com) and log in.
 3. Click the extension icon and choose the **JSON** format.
-4. Hit **Export my data** — you get one file for series and one for movies.
+4. Hit **Export my data** — you get files for series, movies and lists (or a
+   single ZIP with everything).
 
 ### 2. Get a free TMDB API key
 
@@ -85,19 +92,11 @@ The key is kept only in your browser (`localStorage`).
 
 ### 3. Fix
 
-Open the tool, paste your key, drag your JSON files onto the drop zone
-(series and/or movies, detected automatically) and click **Fix**. When it's
-done, download the `-fixed.json` files.
-
----
-
-## Running it
-
-It's a single self-contained `index.html` — no build step, no dependencies.
-
-- **Locally:** just open `index.html` in your browser.
-- **Hosting:** enable **GitHub Pages** on this repo (Settings → Pages → deploy
-  from the default branch, root). The tool is served as-is.
+Open the tool, paste your key, drag your JSON files onto the drop zone —
+series, movies and/or lists, detected automatically, or simply the whole
+Refract **ZIP** — and click **Fix**. Any one of the three files is enough; the
+tool just notes which ones are missing and skips them. When it's done, download
+the `-fixed.json` files.
 
 ---
 
