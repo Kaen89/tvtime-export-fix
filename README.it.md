@@ -58,6 +58,11 @@ col file dei film, o cercati per nome su TMDB), e quando una serie accorpata
 viene divisa, le serie staccate vengono aggiunte alla lista subito dopo
 l'originale. Gli elementi non risolti restano intatti.
 
+A fix completato ottieni un **riepilogo di ogni correzione** direttamente in
+pagina, più un **report HTML** scaricabile con il dettaglio completo per
+serie, film e lista — incluso il conteggio prima/dopo degli episodi visti,
+a prova che nulla è andato perso.
+
 L'output mantiene **lo stesso schema** dell'export originale (più `tmdb_id` e
 `air_date`), così resta importabile ovunque.
 

@@ -56,6 +56,11 @@ file, or looked up by name on TMDB), and when a lumped-together series gets
 split, the detached series are added to the list right after the original.
 Unresolved items are left untouched.
 
+When the fix is done you get a **summary of every correction** right on the
+page, plus a downloadable **HTML report** with the full detail per series,
+movie and list — including a watched-episodes before/after count proving
+nothing was lost.
+
 The output keeps the **same schema** as the original export (plus `tmdb_id` and
 `air_date`), so it stays importable anywhere.
 
