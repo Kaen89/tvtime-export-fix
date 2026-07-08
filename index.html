@@ -547,6 +547,15 @@ function progress(done, total) {
 // --- TMDB client -------------------------------------------------------------
 let KEY = ''
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+// TV Time exports watched_at in two shapes across versions: "YYYY-MM-DD HH:MM:SS"
+// and ISO8601 ("...THH:MM:SSZ"). Normalize both to an ISO string; never throw on
+// a bad value (returns now()), so a single odd date can't abort a whole series.
+function toIso(s) {
+  if (!s) return new Date().toISOString()
+  const norm = s.includes('T') ? s : s.replace(' ', 'T') + 'Z'
+  const d = new Date(norm)
+  return isNaN(d) ? new Date().toISOString() : d.toISOString()
+}
 // Run fn over items with at most `limit` in flight; results keep input order.
 // The whole pipeline is network-bound on TMDB, so this is where the time goes.
 async function mapPool(items, limit, fn) {
@@ -706,7 +715,7 @@ async function movieFromTmdb(id, sp) {
   return {
     id: { tvdb: d.external_ids?.tvdb_id ?? sp.id?.tvdb ?? null, imdb: d.external_ids?.imdb_id ?? null },
     uuid: crypto.randomUUID(),
-    created_at: sp.watched_at ? new Date(sp.watched_at.replace(' ', 'T') + 'Z').toISOString() : new Date().toISOString(),
+    created_at: toIso(sp.watched_at),
     title: d.title || sp.name,
     year: d.release_date ? Number(d.release_date.slice(0, 4)) : null,
     watched_at: sp.watched_at ?? null, is_watched: !!sp.is_watched, is_favorite: false,
@@ -1229,7 +1238,8 @@ $('#go').onclick = async () => {
           if (item.uuid && r.movie.tmdb_id) ctx.movieUuidToTmdb.set(item.uuid, r.movie.tmdb_id)
           report.push({ kind: 'movies', file: f.name, title, note, year: r.movie.year ?? null, release: r.movie.release_date ?? null, tmdbId: r.movie.tmdb_id ?? null })
         }
-      } catch {
+      } catch (err) {
+        console.error(`fix failed for "${item.title}":`, err)
         entries.push(item); title = item.title; note = 'error'
         const c = countEpisodes([item])
         report.push(f.kind === 'series'
