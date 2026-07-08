@@ -157,6 +157,7 @@ const T = {
     tSplitNew: 'series created', tExtracted: 'movies extracted', tDupes: 'duplicates merged',
     tManual: 'to add manually', manualHead: '📌 To add manually in Refract',
     manualHint: 'Refract probably can\'t match these on TMDB, so its import may skip them. Add them by hand afterwards:',
+    atRiskNote: 'watched episodes TMDB doesn\x27t have, which the import will likely skip: %n',
     reportName: 'fix report', r_title: 'TV Time fix report',
     h_outcome: 'outcome', h_episodes: 'episodes', h_watched: 'watched', h_dupes: 'duplicates',
     h_split: 'split into', h_movies: 'extracted movies', h_items: 'items', h_year: 'year',
@@ -189,6 +190,7 @@ const T = {
     tSplitNew: 'serie create', tExtracted: 'film estratti', tDupes: 'duplicati uniti',
     tManual: 'da aggiungere a mano', manualHead: '📌 Da aggiungere a mano in Refract',
     manualHint: 'Refract probabilmente non riesce a trovarle su TMDB, quindi l\'import potrebbe saltarle. Dopo, aggiungile a mano:',
+    atRiskNote: 'episodi visti che TMDB non ha, che l\x27import probabilmente salterà: %n',
     reportName: 'report correzioni', r_title: 'Report correzioni TV Time',
     h_outcome: 'esito', h_episodes: 'episodi', h_watched: 'visti', h_dupes: 'duplicati',
     h_split: 'divisa in', h_movies: 'film estratti', h_items: 'elementi', h_year: 'anno',
@@ -221,6 +223,7 @@ const T = {
     tSplitNew: 'series creadas', tExtracted: 'películas extraídas', tDupes: 'duplicados fusionados',
     tManual: 'añadir a mano', manualHead: '📌 Para añadir a mano en Refract',
     manualHint: 'Refract probablemente no puede encontrarlas en TMDB, así que la importación podría omitirlas. Añádelas a mano después:',
+    atRiskNote: 'episodios vistos que TMDB no tiene, que la importación probablemente omitirá: %n',
     reportName: 'informe de correcciones', r_title: 'Informe de correcciones de TV Time',
     h_outcome: 'resultado', h_episodes: 'episodios', h_watched: 'vistos', h_dupes: 'duplicados',
     h_split: 'dividida en', h_movies: 'películas extraídas', h_items: 'elementos', h_year: 'año',
@@ -253,6 +256,7 @@ const T = {
     tSplitNew: 'séries créées', tExtracted: 'films extraits', tDupes: 'doublons fusionnés',
     tManual: 'à ajouter à la main', manualHead: '📌 À ajouter à la main dans Refract',
     manualHint: 'Refract ne pourra probablement pas les associer sur TMDB, l\x27import risque de les ignorer. Ajoutez-les à la main ensuite :',
+    atRiskNote: 'épisodes vus absents de TMDB, que l\x27import ignorera probablement : %n',
     reportName: 'rapport de corrections', r_title: 'Rapport de corrections TV Time',
     h_outcome: 'résultat', h_episodes: 'épisodes', h_watched: 'vus', h_dupes: 'doublons',
     h_split: 'divisée en', h_movies: 'films extraits', h_items: 'éléments', h_year: 'année',
@@ -285,6 +289,7 @@ const T = {
     tSplitNew: 'Serien erstellt', tExtracted: 'Filme extrahiert', tDupes: 'Duplikate zusammengeführt',
     tManual: 'manuell hinzufügen', manualHead: '📌 Manuell in Refract hinzufügen',
     manualHint: 'Refract kann diese auf TMDB wahrscheinlich nicht zuordnen, der Import überspringt sie möglicherweise. Füge sie danach von Hand hinzu:',
+    atRiskNote: 'gesehene Episoden, die TMDB nicht hat und die der Import wahrscheinlich überspringt: %n',
     reportName: 'Korrekturbericht', r_title: 'TV-Time-Korrekturbericht',
     h_outcome: 'Ergebnis', h_episodes: 'Episoden', h_watched: 'gesehen', h_dupes: 'Duplikate',
     h_split: 'aufgeteilt in', h_movies: 'extrahierte Filme', h_items: 'Einträge', h_year: 'Jahr',
@@ -317,6 +322,7 @@ const T = {
     tSplitNew: 'séries criadas', tExtracted: 'filmes extraídos', tDupes: 'duplicados fundidos',
     tManual: 'adicionar à mão', manualHead: '📌 Para adicionar à mão no Refract',
     manualHint: 'O Refract provavelmente não consegue encontrá-las no TMDB, então a importação pode ignorá-las. Adicione-as à mão depois:',
+    atRiskNote: 'episódios vistos que o TMDB não tem, que a importação provavelmente ignorará: %n',
     reportName: 'relatório de correções', r_title: 'Relatório de correções do TV Time',
     h_outcome: 'resultado', h_episodes: 'episódios', h_watched: 'vistos', h_dupes: 'duplicados',
     h_split: 'dividida em', h_movies: 'filmes extraídos', h_items: 'itens', h_year: 'ano',
@@ -349,6 +355,7 @@ const T = {
     tSplitNew: '作成されたシリーズ', tExtracted: '抽出された映画', tDupes: '統合された重複',
     tManual: '手動で追加', manualHead: '📌 Refractで手動追加',
     manualHint: 'RefractはこれらをTMDBで照合できない可能性があり、インポートで飛ばされることがあります。あとで手動で追加してください:',
+    atRiskNote: 'TMDBにない視聴済みエピソード（インポートで飛ばされる可能性）: %n',
     reportName: '修正レポート', r_title: 'TV Time 修正レポート',
     h_outcome: '結果', h_episodes: 'エピソード', h_watched: '視聴済み', h_dupes: '重複',
     h_split: '分割先', h_movies: '抽出された映画', h_items: '項目', h_year: '年',
@@ -381,6 +388,7 @@ const T = {
     tSplitNew: '新建剧集', tExtracted: '提取的电影', tDupes: '合并的重复项',
     tManual: '需手动添加', manualHead: '📌 需在 Refract 手动添加',
     manualHint: 'Refract 可能无法在 TMDB 匹配这些，导入时可能跳过。请之后手动添加:',
+    atRiskNote: 'TMDB 没有的已观看剧集，导入可能会跳过：%n',
     reportName: '修复报告', r_title: 'TV Time 修复报告',
     h_outcome: '结果', h_episodes: '剧集数', h_watched: '已看', h_dupes: '重复项',
     h_split: '拆分为', h_movies: '提取的电影', h_items: '条目', h_year: '年份',
@@ -834,14 +842,17 @@ async function remapByEpisode(serie, mainId, canonical, flat, specials, movies, 
   const remapWatched = watchedInSlots(mainByKey) + mainSpecials.filter((e) => e.is_watched).length + splitWatched
   const preserveWatched = flat.filter((e) => e.is_watched && canonKeys.has(`S${e._season}E${e.number}`)).length
   if (remapWatched <= preserveWatched) {
-    return { series: [withSeasons(serie, mainId, preserved.episodes, specials)], movies, dupes, note: 'preserved', extra: preserved.extra }
+    // Watched episodes the export keeps but that sit outside TMDB's structure:
+    // Refract will most likely skip them on import.
+    const atRisk = preserved.episodes.filter((x) => x._row.is_watched && !canonKeys.has(`S${x._season}E${x._row.number}`)).length
+    return { series: [withSeasons(serie, mainId, preserved.episodes, specials)], movies, dupes, note: 'preserved', extra: preserved.extra, atRisk }
   }
   const episodes = canonical.map((c) => ({ _season: c.season, _row: buildEpisode(c, mainByKey.get(`S${c.season}E${c.number}`)) }))
   for (const e of extras) episodes.push({ _season: e._season ?? 0, _row: preservedRow(e) })
   const outSeries = [withSeasons(serie, mainId, episodes, [...specials, ...mainSpecials]), ...splitSeries]
   const note = splits.length ? 'split' : 'remapped'
   const extra = splits.length ? ` (${outSeries.map((s) => s.title).join(' + ')})` : ` (${flat.length}→${canonical.length})`
-  return { series: outSeries, movies, splits, dupes, note, extra }
+  return { series: outSeries, movies, splits, dupes, note, extra, atRisk: extras.filter((e) => e.is_watched).length }
 }
 async function fixSeries(serie) {
   const { flat, specials: allSpecials, dupes } = flattenExport(serie)
@@ -999,13 +1010,14 @@ const REAL_FIXES = new Set(['remapped', 'split', 'preserved'])
 function reportStats(report) {
   const s = { remapped: 0, split: 0, splitNew: 0, extracted: 0, dupes: 0, preserved: 0, aligned: 0,
     seriesNoTmdb: 0, moviesUpdated: 0, moviesNoTmdb: 0, watchedB: 0, watchedA: 0,
-    listResolved: 0, listAdded: 0, listUnresolved: 0, manual: [] }
+    listResolved: 0, listAdded: 0, listUnresolved: 0, manual: [], atRisk: 0 }
   for (const e of report) {
     if (e.kind === 'series') {
       s.watchedB += e.watchedBefore || 0; s.watchedA += e.watchedAfter || 0
       s.dupes += e.dupes || 0; s.extracted += e.extractedMovies?.length || 0
       if (e.lostSplits?.length) s.manual.push(...e.lostSplits)
       if (e.note === 'noTmdb') s.manual.push(e.title)
+      s.atRisk += e.atRisk || 0
       if (e.note === 'remapped') s.remapped++
       else if (e.note === 'split') { s.split++; s.splitNew += e.splitInto?.length || 0 }
       else if (e.note === 'preserved') s.preserved++
@@ -1042,7 +1054,8 @@ function renderSummary(report) {
   for (const e of report) {
     if (e.kind === 'series' && (REAL_FIXES.has(e.note) || e.dupes || e.extractedMovies?.length)) {
       const warn = e.lostSplits?.length ? ` <span class="c-warn">↗ ${esc(t('tManual'))}</span>` : ''
-      rows.push(`<div class="fixrow"><b>${esc(e.title)}</b> <span class="c-mut">— ${esc(fixDescription(e))}</span>${warn}</div>`)
+      const risk = e.atRisk ? ` <span class="c-warn" title="${esc(t('atRiskNote').replace('%n', e.atRisk))}">⚠ ${e.atRisk}</span>` : ''
+      rows.push(`<div class="fixrow"><b>${esc(e.title)}</b> <span class="c-mut">— ${esc(fixDescription(e))}</span>${warn}${risk}</div>`)
     } else if (e.kind === 'lists' && e.splitAdded) {
       rows.push(`<div class="fixrow"><b>${esc(e.title)}</b> <span class="c-mut">— +${e.splitAdded} ${esc(t('n_splitAdded'))}: ${esc(e.splitTitles.join(', '))}</span></div>`)
     }
@@ -1053,7 +1066,8 @@ function renderSummary(report) {
     manual +
     (rows.length ? `<div class="fixrows">${rows.join('')}</div>` : `<p class="hint">${esc(t('noFixes'))}</p>`) +
     `<p class="hint" style="margin:12px 0 0"><span class="${watchedCls}">${esc(t('watchedKept').replace('%b', s.watchedB).replace('%a', s.watchedA))}</span>` +
-    ` · ${esc(t('alignedOnly').replace('%a', s.aligned).replace('%u', s.moviesUpdated))}</p>`
+    ` · ${esc(t('alignedOnly').replace('%a', s.aligned).replace('%u', s.moviesUpdated))}` +
+    (s.atRisk ? ` · <span class="c-warn">⚠ ${esc(t('atRiskNote').replace('%n', s.atRisk))}</span>` : '') + `</p>`
   box.style.display = 'block'
 }
 function buildReportHtml(report) {
@@ -1065,7 +1079,7 @@ function buildReportHtml(report) {
   const tile = (n, label, warn = false) => n ? `<div class="tile${warn ? ' warn' : ''}"><b>${n}</b><span>${esc(label)}</span></div>` : ''
   const th = (cols) => `<tr>${cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr>`
   const seriesRows = series.map((e) => `<tr data-note="${esc(e.note)}"><td>${esc(e.title)}${e.note === 'noTmdb' ? ` <span class="lost">↗ ${esc(t('tManual'))}</span>` : ''}</td><td>${esc(noteLabel(e.note))}</td>` +
-    `<td data-n="${e.epBefore}">${e.epBefore} → ${e.epAfter}</td><td data-n="${e.watchedBefore}" class="${e.watchedAfter >= e.watchedBefore ? '' : 'bad'}">${e.watchedBefore} → ${e.watchedAfter}</td>` +
+    `<td data-n="${e.epBefore}">${e.epBefore} → ${e.epAfter}</td><td data-n="${e.watchedBefore}" class="${e.watchedAfter >= e.watchedBefore ? '' : 'bad'}">${e.watchedBefore} → ${e.watchedAfter}${e.atRisk ? ` <span class="lost" title="${esc(t('atRiskNote').replace('%n', e.atRisk))}">⚠ ${e.atRisk}</span>` : ''}</td>` +
     `<td data-n="${e.dupes || 0}">${e.dupes || ''}</td><td>${esc((e.splitInto || []).join(', '))}${e.lostSplits?.length ? `<div class="lost">↗ ${esc(t('tManual'))}</div>` : ''}</td><td>${esc((e.extractedMovies || []).join(', '))}</td><td>${e.tmdbId ?? ''}</td></tr>`).join('')
   const movieRows = movies.map((e) => `<tr><td>${esc(e.title)}</td><td>${esc(noteLabel(e.note))}</td><td>${e.year ?? ''}</td><td>${esc(e.release || '')}</td><td>${e.tmdbId ?? ''}</td></tr>`).join('')
   const listRows = lists.map((e) => `<tr><td>${esc(e.title)}</td><td data-n="${e.items}">${e.items}</td><td data-n="${e.resolved}">${e.resolved}</td>` +
@@ -1087,7 +1101,7 @@ td.bad{color:#ff6b6b;font-weight:700}.lost{color:#ffcf5b;font-size:12px;margin-t
 ul.legend{color:#9aa7c0;font-size:13px;padding-left:20px}ul.legend b{color:#e7ecf5}
 </style></head><body><div class="wrap">
 <h1>🩹 ${esc(t('r_title'))}</h1>
-<p class="mut">${new Date().toLocaleString(lang)} · ${series.length} ${esc(t('kSeries'))} · ${movies.length} ${esc(t('kMovies'))} · ${lists.length} ${esc(t('kLists'))} · <b>${esc(t('watchedKept').replace('%b', s.watchedB).replace('%a', s.watchedA))}</b></p>
+<p class="mut">${new Date().toLocaleString(lang)} · ${series.length} ${esc(t('kSeries'))} · ${movies.length} ${esc(t('kMovies'))} · ${lists.length} ${esc(t('kLists'))} · <b>${esc(t('watchedKept').replace('%b', s.watchedB).replace('%a', s.watchedA))}</b>${s.atRisk ? ` · <b style="color:#ffcf5b">⚠ ${esc(t('atRiskNote').replace('%n', s.atRisk))}</b>` : ''}</p>
 <div class="tiles">${tile(s.remapped, t('n_remapped'))}${tile(s.split, t('n_split'))}${tile(s.splitNew, t('tSplitNew'))}${tile(s.extracted, t('tExtracted'))}${tile(s.dupes, t('tDupes'))}${tile(s.preserved, t('n_preserved'), true)}${tile(s.aligned, t('n_aligned'))}${tile(s.moviesUpdated, t('n_updated'))}${tile(s.listResolved, t('n_resolved'))}${tile(s.listAdded, t('n_splitAdded'))}${tile(s.manual.length, t('tManual'), true)}</div>
 ${s.manual.length ? `<div class="callout"><b>${esc(t('manualHead'))}</b><span>${esc(t('manualHint'))}</span><ul>${s.manual.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
 ${series.length ? `<h2>${esc(t('kSeries'))}</h2>
@@ -1177,6 +1191,7 @@ $('#go').onclick = async () => {
             watchedBefore: before.watched, watchedAfter: after.watched + (r.movies || []).filter((m) => m.is_watched).length,
             dupes: r.dupes || 0, splitInto: r.series.slice(1).map((s) => s.title),
             lostSplits: r.series.slice(1).filter((s) => !s.id?.tvdb && !s.id?.imdb).map((s) => s.title),
+            atRisk: r.atRisk || 0,
             extractedMovies: (r.movies || []).map((m) => m.title), tmdbId: r.series[0].tmdb_id ?? null })
         } else {
           const r = await fixMovie(item); entries.push(r.movie); title = r.movie.title; note = r.note
