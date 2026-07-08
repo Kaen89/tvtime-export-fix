@@ -616,7 +616,7 @@ async function fetchShow(tmdbId) {
     }
   }
   const ext = await tmdb(`/tv/${tmdbId}/external_ids`)
-  return { canonical, name: show.name, tvdb: ext?.tvdb_id ?? null, imdb: ext?.imdb_id ?? null }
+  return { canonical, name: show.name, tvdb: ext?.tvdb_id ?? null, imdb: ext?.imdb_id || null }
 }
 // Cache the promise (not the resolved value) so concurrent callers dedupe
 // on the in-flight request instead of both firing it.
@@ -747,12 +747,21 @@ function splitBase(meta) {
     title: meta.name, status: 'continuing', is_favorite: false, _noEpisodeData: false,
   }
 }
+// Fill missing series-level ids from TMDB. Refract matches series by TVDB id
+// (falling back to IMDB), ignoring tmdb_id, so an export lacking both would be
+// dropped on import; backfill whatever TMDB knows.
+function enrichSeriesId(serie, show) {
+  return { ...serie, id: {
+    tvdb: serie.id?.tvdb ?? show.tvdb ?? null,
+    imdb: serie.id?.imdb || show.imdb || null,
+  } }
+}
 async function fixSeries(serie) {
   const { flat, specials: allSpecials, dupes } = flattenExport(serie)
   const { keptSpecials: specials, movies, extractedTvdb } = await extractMovieSpecials(allSpecials, serie.title)
   const mainId = await findTmdbId(serie)
   let canonical = []
-  if (mainId) { const show = await getShow(mainId); if (show) canonical = show.canonical }
+  if (mainId) { const show = await getShow(mainId); if (show) { canonical = show.canonical; serie = enrichSeriesId(serie, show) } }
   const canonKeys = new Set(canonical.map((c) => `S${c.season}E${c.number}`))
 
   // Clean case (all keys covered by TMDB): classic single-series path.
@@ -833,10 +842,13 @@ async function findMovieId(m) {
 async function fixMovie(m) {
   const id = await findMovieId(m)
   if (!id) return { movie: m, note: 'noTmdb' }
-  const det = await tmdb(`/movie/${id}`)
+  const det = await tmdb(`/movie/${id}`, `&append_to_response=external_ids`)
   if (!det) return { movie: m, note: 'noTmdb' }
   const year = det.release_date ? Number(det.release_date.slice(0, 4)) : m.year
-  return { movie: { ...m, tmdb_id: id, year, release_date: det.release_date || null }, note: 'updated' }
+  // Refract matches movies by IMDB id (TVDB is not supported for movies), and
+  // the original export's ids are often broken, so overwrite them with TMDB's.
+  const id2 = { tvdb: det.external_ids?.tvdb_id ?? m.id?.tvdb ?? null, imdb: det.external_ids?.imdb_id || m.id?.imdb || null }
+  return { movie: { ...m, id: id2, tmdb_id: id, year, release_date: det.release_date || null }, note: 'updated' }
 }
 
 // --- Lists logic ---------------------------------------------------------------
