@@ -158,6 +158,7 @@ const T = {
     tManual: 'to add manually', manualHead: '📌 To add manually in Refract',
     manualHint: 'Refract probably can\'t match these on TMDB, so its import may skip them. Add them by hand afterwards:',
     atRiskNote: 'watched episodes TMDB doesn\x27t have, which the import will likely skip: %n',
+    atRiskHead: 'Some series also have watched episodes that may not import (TMDB doesn\x27t have them):',
     reportName: 'fix report', r_title: 'TV Time fix report',
     h_outcome: 'outcome', h_episodes: 'episodes', h_watched: 'watched', h_dupes: 'duplicates',
     h_split: 'split into', h_movies: 'extracted movies', h_items: 'items', h_year: 'year',
@@ -191,6 +192,7 @@ const T = {
     tManual: 'da aggiungere a mano', manualHead: '📌 Da aggiungere a mano in Refract',
     manualHint: 'Refract probabilmente non riesce a trovarle su TMDB, quindi l\'import potrebbe saltarle. Dopo, aggiungile a mano:',
     atRiskNote: 'episodi visti che TMDB non ha, che l\x27import probabilmente salterà: %n',
+    atRiskHead: 'Inoltre alcune serie hanno episodi visti che potrebbero non essere importati (TMDB non li ha):',
     reportName: 'report correzioni', r_title: 'Report correzioni TV Time',
     h_outcome: 'esito', h_episodes: 'episodi', h_watched: 'visti', h_dupes: 'duplicati',
     h_split: 'divisa in', h_movies: 'film estratti', h_items: 'elementi', h_year: 'anno',
@@ -224,6 +226,7 @@ const T = {
     tManual: 'añadir a mano', manualHead: '📌 Para añadir a mano en Refract',
     manualHint: 'Refract probablemente no puede encontrarlas en TMDB, así que la importación podría omitirlas. Añádelas a mano después:',
     atRiskNote: 'episodios vistos que TMDB no tiene, que la importación probablemente omitirá: %n',
+    atRiskHead: 'Además, algunas series tienen episodios vistos que podrían no importarse (TMDB no los tiene):',
     reportName: 'informe de correcciones', r_title: 'Informe de correcciones de TV Time',
     h_outcome: 'resultado', h_episodes: 'episodios', h_watched: 'vistos', h_dupes: 'duplicados',
     h_split: 'dividida en', h_movies: 'películas extraídas', h_items: 'elementos', h_year: 'año',
@@ -257,6 +260,7 @@ const T = {
     tManual: 'à ajouter à la main', manualHead: '📌 À ajouter à la main dans Refract',
     manualHint: 'Refract ne pourra probablement pas les associer sur TMDB, l\x27import risque de les ignorer. Ajoutez-les à la main ensuite :',
     atRiskNote: 'épisodes vus absents de TMDB, que l\x27import ignorera probablement : %n',
+    atRiskHead: 'De plus, certaines séries ont des épisodes vus qui pourraient ne pas être importés (TMDB ne les a pas) :',
     reportName: 'rapport de corrections', r_title: 'Rapport de corrections TV Time',
     h_outcome: 'résultat', h_episodes: 'épisodes', h_watched: 'vus', h_dupes: 'doublons',
     h_split: 'divisée en', h_movies: 'films extraits', h_items: 'éléments', h_year: 'année',
@@ -290,6 +294,7 @@ const T = {
     tManual: 'manuell hinzufügen', manualHead: '📌 Manuell in Refract hinzufügen',
     manualHint: 'Refract kann diese auf TMDB wahrscheinlich nicht zuordnen, der Import überspringt sie möglicherweise. Füge sie danach von Hand hinzu:',
     atRiskNote: 'gesehene Episoden, die TMDB nicht hat und die der Import wahrscheinlich überspringt: %n',
+    atRiskHead: 'Außerdem haben einige Serien gesehene Episoden, die evtl. nicht importiert werden (TMDB kennt sie nicht):',
     reportName: 'Korrekturbericht', r_title: 'TV-Time-Korrekturbericht',
     h_outcome: 'Ergebnis', h_episodes: 'Episoden', h_watched: 'gesehen', h_dupes: 'Duplikate',
     h_split: 'aufgeteilt in', h_movies: 'extrahierte Filme', h_items: 'Einträge', h_year: 'Jahr',
@@ -323,6 +328,7 @@ const T = {
     tManual: 'adicionar à mão', manualHead: '📌 Para adicionar à mão no Refract',
     manualHint: 'O Refract provavelmente não consegue encontrá-las no TMDB, então a importação pode ignorá-las. Adicione-as à mão depois:',
     atRiskNote: 'episódios vistos que o TMDB não tem, que a importação provavelmente ignorará: %n',
+    atRiskHead: 'Além disso, algumas séries têm episódios vistos que podem não ser importados (o TMDB não os tem):',
     reportName: 'relatório de correções', r_title: 'Relatório de correções do TV Time',
     h_outcome: 'resultado', h_episodes: 'episódios', h_watched: 'vistos', h_dupes: 'duplicados',
     h_split: 'dividida em', h_movies: 'filmes extraídos', h_items: 'itens', h_year: 'ano',
@@ -356,6 +362,7 @@ const T = {
     tManual: '手動で追加', manualHead: '📌 Refractで手動追加',
     manualHint: 'RefractはこれらをTMDBで照合できない可能性があり、インポートで飛ばされることがあります。あとで手動で追加してください:',
     atRiskNote: 'TMDBにない視聴済みエピソード（インポートで飛ばされる可能性）: %n',
+    atRiskHead: 'また、一部のシリーズにはインポートされない可能性のある視聴済みエピソードがあります（TMDBにありません）:',
     reportName: '修正レポート', r_title: 'TV Time 修正レポート',
     h_outcome: '結果', h_episodes: 'エピソード', h_watched: '視聴済み', h_dupes: '重複',
     h_split: '分割先', h_movies: '抽出された映画', h_items: '項目', h_year: '年',
@@ -389,6 +396,7 @@ const T = {
     tManual: '需手动添加', manualHead: '📌 需在 Refract 手动添加',
     manualHint: 'Refract 可能无法在 TMDB 匹配这些，导入时可能跳过。请之后手动添加:',
     atRiskNote: 'TMDB 没有的已观看剧集，导入可能会跳过：%n',
+    atRiskHead: '此外，部分剧集有可能无法导入的已观看剧集（TMDB 没有）：',
     reportName: '修复报告', r_title: 'TV Time 修复报告',
     h_outcome: '结果', h_episodes: '剧集数', h_watched: '已看', h_dupes: '重复项',
     h_split: '拆分为', h_movies: '提取的电影', h_items: '条目', h_year: '年份',
@@ -1010,7 +1018,7 @@ const REAL_FIXES = new Set(['remapped', 'split', 'preserved'])
 function reportStats(report) {
   const s = { remapped: 0, split: 0, splitNew: 0, extracted: 0, dupes: 0, preserved: 0, aligned: 0,
     seriesNoTmdb: 0, moviesUpdated: 0, moviesNoTmdb: 0, watchedB: 0, watchedA: 0,
-    listResolved: 0, listAdded: 0, listUnresolved: 0, manual: [], atRisk: 0 }
+    listResolved: 0, listAdded: 0, listUnresolved: 0, manual: [], atRisk: 0, atRiskList: [] }
   for (const e of report) {
     if (e.kind === 'series') {
       s.watchedB += e.watchedBefore || 0; s.watchedA += e.watchedAfter || 0
@@ -1018,6 +1026,7 @@ function reportStats(report) {
       if (e.lostSplits?.length) s.manual.push(...e.lostSplits)
       if (e.note === 'noTmdb') s.manual.push(e.title)
       s.atRisk += e.atRisk || 0
+      if (e.atRisk) s.atRiskList.push({ title: e.title, n: e.atRisk })
       if (e.note === 'remapped') s.remapped++
       else if (e.note === 'split') { s.split++; s.splitNew += e.splitInto?.length || 0 }
       else if (e.note === 'preserved') s.preserved++
@@ -1030,6 +1039,14 @@ function reportStats(report) {
     }
   }
   return s
+}
+// Callout listing what needs manual attention in Refract: whole series that
+// can't be matched at all, plus series that keep watched episodes TMDB lacks.
+function manualCallout(s) {
+  const parts = []
+  if (s.manual.length) parts.push(`<span>${esc(t('manualHint'))}</span><ul>${s.manual.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`)
+  if (s.atRiskList.length) parts.push(`<span>${esc(t('atRiskHead'))}</span><ul>${s.atRiskList.map((x) => `<li>${esc(x.title)} — ${x.n}</li>`).join('')}</ul>`)
+  return parts.length ? `<div class="callout"><b>${esc(t('manualHead'))}</b>${parts.join('')}</div>` : ''
 }
 function fixDescription(e) {
   const bits = [t('n_' + e.note) + (e.extra || '')]
@@ -1047,9 +1064,7 @@ function renderSummary(report) {
     tile(s.listResolved, t('n_resolved')), tile(s.listAdded, t('n_splitAdded')),
     tile(s.manual.length, t('tManual'), true),
   ].join('')
-  const manual = s.manual.length
-    ? `<div class="callout"><b>${esc(t('manualHead'))}</b><span>${esc(t('manualHint'))}</span><ul>${s.manual.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`
-    : ''
+  const manual = manualCallout(s)
   const rows = []
   for (const e of report) {
     if (e.kind === 'series' && (REAL_FIXES.has(e.note) || e.dupes || e.extractedMovies?.length)) {
@@ -1103,7 +1118,7 @@ ul.legend{color:#9aa7c0;font-size:13px;padding-left:20px}ul.legend b{color:#e7ec
 <h1>🩹 ${esc(t('r_title'))}</h1>
 <p class="mut">${new Date().toLocaleString(lang)} · ${series.length} ${esc(t('kSeries'))} · ${movies.length} ${esc(t('kMovies'))} · ${lists.length} ${esc(t('kLists'))} · <b>${esc(t('watchedKept').replace('%b', s.watchedB).replace('%a', s.watchedA))}</b>${s.atRisk ? ` · <b style="color:#ffcf5b">⚠ ${esc(t('atRiskNote').replace('%n', s.atRisk))}</b>` : ''}</p>
 <div class="tiles">${tile(s.remapped, t('n_remapped'))}${tile(s.split, t('n_split'))}${tile(s.splitNew, t('tSplitNew'))}${tile(s.extracted, t('tExtracted'))}${tile(s.dupes, t('tDupes'))}${tile(s.preserved, t('n_preserved'), true)}${tile(s.aligned, t('n_aligned'))}${tile(s.moviesUpdated, t('n_updated'))}${tile(s.listResolved, t('n_resolved'))}${tile(s.listAdded, t('n_splitAdded'))}${tile(s.manual.length, t('tManual'), true)}</div>
-${s.manual.length ? `<div class="callout"><b>${esc(t('manualHead'))}</b><span>${esc(t('manualHint'))}</span><ul>${s.manual.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+${manualCallout(s)}
 ${series.length ? `<h2>${esc(t('kSeries'))}</h2>
 <select id="flt"><option value="">${esc(t('h_outcome'))}: —</option>${outcomes.map((n) => `<option value="${esc(n)}">${esc(noteLabel(n))}</option>`).join('')}</select>
 <div class="tblwrap"><table id="tser">${th(['Title', t('h_outcome'), t('h_episodes'), t('h_watched'), t('h_dupes'), t('h_split'), t('h_movies'), 'TMDB'])}${seriesRows}</table></div>` : ''}
