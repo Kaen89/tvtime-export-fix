@@ -559,16 +559,32 @@ async function mapPool(items, limit, fn) {
   return out
 }
 const CONCURRENCY = 8
+// Global in-flight cap for TMDB: remapByEpisode resolves episodes through its
+// own mapPool, nested inside the file-level mapPool, so without a shared gate
+// concurrency multiplies (8×8) and TMDB rate-limits hard enough that retries
+// run out and responses fail to parse — which used to drop whole series into
+// the error path. Throttle every request through one budget instead.
+const TMDB_MAX = 8
+let tmdbInFlight = 0
+const tmdbQueue = []
+async function tmdbGate() {
+  if (tmdbInFlight >= TMDB_MAX) await new Promise((r) => tmdbQueue.push(r))
+  tmdbInFlight++
+}
+function tmdbRelease() { tmdbInFlight--; tmdbQueue.shift()?.() }
 async function tmdb(path, params = '') {
-  for (let tries = 0; tries < 3; tries++) {
-    let res
-    try { res = await fetch(`https://api.themoviedb.org/3${path}?api_key=${KEY}${params}`) }
-    catch { await sleep(700); continue }
-    if (res.status === 429) { await sleep(1000); continue }
-    if (!res.ok) return null
-    return res.json()
-  }
-  return null
+  await tmdbGate()
+  try {
+    for (let tries = 0; tries < 5; tries++) {
+      let res
+      try { res = await fetch(`https://api.themoviedb.org/3${path}?api_key=${KEY}${params}`) }
+      catch { await sleep(700); continue }
+      if (res.status === 429) { await sleep(1000 + tries * 500); continue }
+      if (!res.ok) return null
+      try { return await res.json() } catch { await sleep(500); continue }
+    }
+    return null
+  } finally { tmdbRelease() }
 }
 
 // --- Series logic (port of fix-export.mjs) -----------------------------------
