@@ -61,6 +61,10 @@
   .tile b { display: block; font-size: 20px; }
   .tile span { font-size: 12px; color: var(--mut); }
   .tile.warn b { color: var(--warn); }
+  .callout { background: rgba(255,207,91,.08); border: 1px solid var(--warn); border-radius: 9px; padding: 10px 14px; margin-bottom: 12px; }
+  .callout b { display: block; font-size: 14px; color: var(--warn); margin-bottom: 4px; }
+  .callout span { display: block; font-size: 12px; color: var(--mut); margin-bottom: 6px; }
+  .callout ul { margin: 0; padding-left: 20px; font-size: 13px; }
   .fixrows { display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow: auto; }
   .fixrow { background: #10182a; border: 1px solid var(--line); border-radius: 9px; padding: 6px 12px; font-size: 13px; }
   .fixrow .c-mut { font-size: 12px; }
@@ -151,6 +155,8 @@ const T = {
     alignedOnly: '%a series already aligned (only enriched) · %u movies updated',
     watchedKept: 'watched episodes: %b → %a',
     tSplitNew: 'series created', tExtracted: 'movies extracted', tDupes: 'duplicates merged',
+    tManual: 'to add manually', manualHead: '📌 To add manually in Refract',
+    manualHint: 'TMDB has no TVDB/IMDB id for these, so Refract\'s import probably can\'t match them. After importing, add them by hand:',
     reportName: 'fix report', r_title: 'TV Time fix report',
     h_outcome: 'outcome', h_episodes: 'episodes', h_watched: 'watched', h_dupes: 'duplicates',
     h_split: 'split into', h_movies: 'extracted movies', h_items: 'items', h_year: 'year',
@@ -181,6 +187,8 @@ const T = {
     alignedOnly: '%a serie già allineate (solo arricchite) · %u film aggiornati',
     watchedKept: 'episodi visti: %b → %a',
     tSplitNew: 'serie create', tExtracted: 'film estratti', tDupes: 'duplicati uniti',
+    tManual: 'da aggiungere a mano', manualHead: '📌 Da aggiungere a mano in Refract',
+    manualHint: 'TMDB non ha id TVDB/IMDB per queste, quindi l\'import di Refract probabilmente non le trova. Dopo l\'import, aggiungile a mano:',
     reportName: 'report correzioni', r_title: 'Report correzioni TV Time',
     h_outcome: 'esito', h_episodes: 'episodi', h_watched: 'visti', h_dupes: 'duplicati',
     h_split: 'divisa in', h_movies: 'film estratti', h_items: 'elementi', h_year: 'anno',
@@ -211,6 +219,8 @@ const T = {
     alignedOnly: '%a series ya alineadas (solo enriquecidas) · %u películas actualizadas',
     watchedKept: 'episodios vistos: %b → %a',
     tSplitNew: 'series creadas', tExtracted: 'películas extraídas', tDupes: 'duplicados fusionados',
+    tManual: 'añadir a mano', manualHead: '📌 Para añadir a mano en Refract',
+    manualHint: 'TMDB no tiene id TVDB/IMDB para estas, así que la importación de Refract probablemente no las encuentra. Tras importar, añádelas a mano:',
     reportName: 'informe de correcciones', r_title: 'Informe de correcciones de TV Time',
     h_outcome: 'resultado', h_episodes: 'episodios', h_watched: 'vistos', h_dupes: 'duplicados',
     h_split: 'dividida en', h_movies: 'películas extraídas', h_items: 'elementos', h_year: 'año',
@@ -241,6 +251,8 @@ const T = {
     alignedOnly: '%a séries déjà alignées (seulement enrichies) · %u films mis à jour',
     watchedKept: 'épisodes vus : %b → %a',
     tSplitNew: 'séries créées', tExtracted: 'films extraits', tDupes: 'doublons fusionnés',
+    tManual: 'à ajouter à la main', manualHead: '📌 À ajouter à la main dans Refract',
+    manualHint: 'TMDB n\x27a pas d\x27id TVDB/IMDB pour celles-ci, l\x27import de Refract ne pourra probablement pas les associer. Après l\x27import, ajoutez-les à la main :',
     reportName: 'rapport de corrections', r_title: 'Rapport de corrections TV Time',
     h_outcome: 'résultat', h_episodes: 'épisodes', h_watched: 'vus', h_dupes: 'doublons',
     h_split: 'divisée en', h_movies: 'films extraits', h_items: 'éléments', h_year: 'année',
@@ -271,6 +283,8 @@ const T = {
     alignedOnly: '%a Serien bereits ausgerichtet (nur angereichert) · %u Filme aktualisiert',
     watchedKept: 'gesehene Episoden: %b → %a',
     tSplitNew: 'Serien erstellt', tExtracted: 'Filme extrahiert', tDupes: 'Duplikate zusammengeführt',
+    tManual: 'manuell hinzufügen', manualHead: '📌 Manuell in Refract hinzufügen',
+    manualHint: 'TMDB hat keine TVDB/IMDB-ID dafür, daher findet der Refract-Import sie wahrscheinlich nicht. Füge sie nach dem Import von Hand hinzu:',
     reportName: 'Korrekturbericht', r_title: 'TV-Time-Korrekturbericht',
     h_outcome: 'Ergebnis', h_episodes: 'Episoden', h_watched: 'gesehen', h_dupes: 'Duplikate',
     h_split: 'aufgeteilt in', h_movies: 'extrahierte Filme', h_items: 'Einträge', h_year: 'Jahr',
@@ -301,6 +315,8 @@ const T = {
     alignedOnly: '%a séries já alinhadas (apenas enriquecidas) · %u filmes atualizados',
     watchedKept: 'episódios vistos: %b → %a',
     tSplitNew: 'séries criadas', tExtracted: 'filmes extraídos', tDupes: 'duplicados fundidos',
+    tManual: 'adicionar à mão', manualHead: '📌 Para adicionar à mão no Refract',
+    manualHint: 'O TMDB não tem id TVDB/IMDB para estas, então a importação do Refract provavelmente não as encontra. Após importar, adicione-as à mão:',
     reportName: 'relatório de correções', r_title: 'Relatório de correções do TV Time',
     h_outcome: 'resultado', h_episodes: 'episódios', h_watched: 'vistos', h_dupes: 'duplicados',
     h_split: 'dividida em', h_movies: 'filmes extraídos', h_items: 'itens', h_year: 'ano',
@@ -331,6 +347,8 @@ const T = {
     alignedOnly: '%a 件のシリーズは既に整合（追加のみ）· %u 件の映画を更新',
     watchedKept: '視聴済みエピソード: %b → %a',
     tSplitNew: '作成されたシリーズ', tExtracted: '抽出された映画', tDupes: '統合された重複',
+    tManual: '手動で追加', manualHead: '📌 Refractで手動追加',
+    manualHint: 'TMDBにTVDB/IMDBのIDがないため、Refractのインポートではおそらく照合できません。インポート後、手動で追加してください:',
     reportName: '修正レポート', r_title: 'TV Time 修正レポート',
     h_outcome: '結果', h_episodes: 'エピソード', h_watched: '視聴済み', h_dupes: '重複',
     h_split: '分割先', h_movies: '抽出された映画', h_items: '項目', h_year: '年',
@@ -361,6 +379,8 @@ const T = {
     alignedOnly: '%a 部剧集已对齐（仅补充数据）· %u 部电影已更新',
     watchedKept: '已看剧集：%b → %a',
     tSplitNew: '新建剧集', tExtracted: '提取的电影', tDupes: '合并的重复项',
+    tManual: '需手动添加', manualHead: '📌 需在 Refract 手动添加',
+    manualHint: 'TMDB 没有这些的 TVDB/IMDB id，Refract 导入可能无法匹配。导入后请手动添加:',
     reportName: '修复报告', r_title: 'TV Time 修复报告',
     h_outcome: '结果', h_episodes: '剧集数', h_watched: '已看', h_dupes: '重复项',
     h_split: '拆分为', h_movies: '提取的电影', h_items: '条目', h_year: '年份',
@@ -742,7 +762,7 @@ function withSeasons(base, tmdbId, episodes, specials) {
 function splitBase(meta) {
   return {
     uuid: crypto.randomUUID(),
-    id: { tvdb: meta.tvdb ?? null, imdb: meta.imdb ?? null },
+    id: { tvdb: meta.tvdb ?? null, imdb: meta.imdb || null },
     created_at: new Date().toISOString(),
     title: meta.name, status: 'continuing', is_favorite: false, _noEpisodeData: false,
   }
@@ -909,11 +929,12 @@ const REAL_FIXES = new Set(['remapped', 'split', 'preserved'])
 function reportStats(report) {
   const s = { remapped: 0, split: 0, splitNew: 0, extracted: 0, dupes: 0, preserved: 0, aligned: 0,
     seriesNoTmdb: 0, moviesUpdated: 0, moviesNoTmdb: 0, watchedB: 0, watchedA: 0,
-    listResolved: 0, listAdded: 0, listUnresolved: 0 }
+    listResolved: 0, listAdded: 0, listUnresolved: 0, manual: [] }
   for (const e of report) {
     if (e.kind === 'series') {
       s.watchedB += e.watchedBefore || 0; s.watchedA += e.watchedAfter || 0
       s.dupes += e.dupes || 0; s.extracted += e.extractedMovies?.length || 0
+      if (e.lostSplits?.length) s.manual.push(...e.lostSplits)
       if (e.note === 'remapped') s.remapped++
       else if (e.note === 'split') { s.split++; s.splitNew += e.splitInto?.length || 0 }
       else if (e.note === 'preserved') s.preserved++
@@ -941,11 +962,16 @@ function renderSummary(report) {
     tile(s.remapped, t('n_remapped')), tile(s.split, t('n_split')), tile(s.splitNew, t('tSplitNew')),
     tile(s.extracted, t('tExtracted')), tile(s.dupes, t('tDupes')), tile(s.preserved, t('n_preserved'), true),
     tile(s.listResolved, t('n_resolved')), tile(s.listAdded, t('n_splitAdded')),
+    tile(s.manual.length, t('tManual'), true),
   ].join('')
+  const manual = s.manual.length
+    ? `<div class="callout"><b>${esc(t('manualHead'))}</b><span>${esc(t('manualHint'))}</span><ul>${s.manual.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`
+    : ''
   const rows = []
   for (const e of report) {
     if (e.kind === 'series' && (REAL_FIXES.has(e.note) || e.dupes || e.extractedMovies?.length)) {
-      rows.push(`<div class="fixrow"><b>${esc(e.title)}</b> <span class="c-mut">— ${esc(fixDescription(e))}</span></div>`)
+      const warn = e.lostSplits?.length ? ` <span class="c-warn">↗ ${esc(t('tManual'))}</span>` : ''
+      rows.push(`<div class="fixrow"><b>${esc(e.title)}</b> <span class="c-mut">— ${esc(fixDescription(e))}</span>${warn}</div>`)
     } else if (e.kind === 'lists' && e.splitAdded) {
       rows.push(`<div class="fixrow"><b>${esc(e.title)}</b> <span class="c-mut">— +${e.splitAdded} ${esc(t('n_splitAdded'))}: ${esc(e.splitTitles.join(', '))}</span></div>`)
     }
@@ -953,6 +979,7 @@ function renderSummary(report) {
   const watchedCls = s.watchedA >= s.watchedB ? 'c-ok' : 'c-err'
   box.innerHTML = `<h2>${esc(t('summaryTitle'))}</h2>` +
     (tiles ? `<div class="tiles">${tiles}</div>` : '') +
+    manual +
     (rows.length ? `<div class="fixrows">${rows.join('')}</div>` : `<p class="hint">${esc(t('noFixes'))}</p>`) +
     `<p class="hint" style="margin:12px 0 0"><span class="${watchedCls}">${esc(t('watchedKept').replace('%b', s.watchedB).replace('%a', s.watchedA))}</span>` +
     ` · ${esc(t('alignedOnly').replace('%a', s.aligned).replace('%u', s.moviesUpdated))}</p>`
@@ -968,7 +995,7 @@ function buildReportHtml(report) {
   const th = (cols) => `<tr>${cols.map((c) => `<th>${esc(c)}</th>`).join('')}</tr>`
   const seriesRows = series.map((e) => `<tr data-note="${esc(e.note)}"><td>${esc(e.title)}</td><td>${esc(noteLabel(e.note))}</td>` +
     `<td data-n="${e.epBefore}">${e.epBefore} → ${e.epAfter}</td><td data-n="${e.watchedBefore}" class="${e.watchedAfter >= e.watchedBefore ? '' : 'bad'}">${e.watchedBefore} → ${e.watchedAfter}</td>` +
-    `<td data-n="${e.dupes || 0}">${e.dupes || ''}</td><td>${esc((e.splitInto || []).join(', '))}</td><td>${esc((e.extractedMovies || []).join(', '))}</td><td>${e.tmdbId ?? ''}</td></tr>`).join('')
+    `<td data-n="${e.dupes || 0}">${e.dupes || ''}</td><td>${esc((e.splitInto || []).join(', '))}${e.lostSplits?.length ? `<div class="lost">↗ ${esc(t('tManual'))}</div>` : ''}</td><td>${esc((e.extractedMovies || []).join(', '))}</td><td>${e.tmdbId ?? ''}</td></tr>`).join('')
   const movieRows = movies.map((e) => `<tr><td>${esc(e.title)}</td><td>${esc(noteLabel(e.note))}</td><td>${e.year ?? ''}</td><td>${esc(e.release || '')}</td><td>${e.tmdbId ?? ''}</td></tr>`).join('')
   const listRows = lists.map((e) => `<tr><td>${esc(e.title)}</td><td data-n="${e.items}">${e.items}</td><td data-n="${e.resolved}">${e.resolved}</td>` +
     `<td data-n="${e.splitAdded}">${e.splitAdded}${e.splitTitles?.length ? ` (${esc(e.splitTitles.join(', '))})` : ''}</td><td data-n="${e.unresolved}">${e.unresolved}</td></tr>`).join('')
@@ -983,12 +1010,15 @@ body{margin:0;background:#0f1420;color:#e7ecf5;font:14px/1.5 system-ui,-apple-sy
 .tblwrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}
 th,td{border:1px solid #2a3550;padding:6px 10px;text-align:left;vertical-align:top}
 th{background:#1a2233;cursor:pointer;white-space:nowrap;user-select:none}tr:nth-child(even) td{background:#131b2d}
-td.bad{color:#ff6b6b;font-weight:700}select{background:#10182a;color:#e7ecf5;border:1px solid #2a3550;border-radius:7px;padding:5px 8px;font:inherit;margin-bottom:10px}
+td.bad{color:#ff6b6b;font-weight:700}.lost{color:#ffcf5b;font-size:12px;margin-top:3px}select{background:#10182a;color:#e7ecf5;border:1px solid #2a3550;border-radius:7px;padding:5px 8px;font:inherit;margin-bottom:10px}
+.callout{background:rgba(255,207,91,.08);border:1px solid #ffcf5b;border-radius:9px;padding:12px 16px;margin:16px 0}
+.callout b{display:block;color:#ffcf5b;margin-bottom:4px}.callout span{display:block;color:#9aa7c0;font-size:13px;margin-bottom:6px}.callout ul{margin:0;padding-left:20px}
 ul.legend{color:#9aa7c0;font-size:13px;padding-left:20px}ul.legend b{color:#e7ecf5}
 </style></head><body><div class="wrap">
 <h1>🩹 ${esc(t('r_title'))}</h1>
 <p class="mut">${new Date().toLocaleString(lang)} · ${series.length} ${esc(t('kSeries'))} · ${movies.length} ${esc(t('kMovies'))} · ${lists.length} ${esc(t('kLists'))} · <b>${esc(t('watchedKept').replace('%b', s.watchedB).replace('%a', s.watchedA))}</b></p>
-<div class="tiles">${tile(s.remapped, t('n_remapped'))}${tile(s.split, t('n_split'))}${tile(s.splitNew, t('tSplitNew'))}${tile(s.extracted, t('tExtracted'))}${tile(s.dupes, t('tDupes'))}${tile(s.preserved, t('n_preserved'), true)}${tile(s.aligned, t('n_aligned'))}${tile(s.moviesUpdated, t('n_updated'))}${tile(s.listResolved, t('n_resolved'))}${tile(s.listAdded, t('n_splitAdded'))}</div>
+<div class="tiles">${tile(s.remapped, t('n_remapped'))}${tile(s.split, t('n_split'))}${tile(s.splitNew, t('tSplitNew'))}${tile(s.extracted, t('tExtracted'))}${tile(s.dupes, t('tDupes'))}${tile(s.preserved, t('n_preserved'), true)}${tile(s.aligned, t('n_aligned'))}${tile(s.moviesUpdated, t('n_updated'))}${tile(s.listResolved, t('n_resolved'))}${tile(s.listAdded, t('n_splitAdded'))}${tile(s.manual.length, t('tManual'), true)}</div>
+${s.manual.length ? `<div class="callout"><b>${esc(t('manualHead'))}</b><span>${esc(t('manualHint'))}</span><ul>${s.manual.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
 ${series.length ? `<h2>${esc(t('kSeries'))}</h2>
 <select id="flt"><option value="">${esc(t('h_outcome'))}: —</option>${outcomes.map((n) => `<option value="${esc(n)}">${esc(noteLabel(n))}</option>`).join('')}</select>
 <div class="tblwrap"><table id="tser">${th(['Title', t('h_outcome'), t('h_episodes'), t('h_watched'), t('h_dupes'), t('h_split'), t('h_movies'), 'TMDB'])}${seriesRows}</table></div>` : ''}
@@ -1075,6 +1105,7 @@ $('#go').onclick = async () => {
             epBefore: before.episodes, epAfter: after.episodes,
             watchedBefore: before.watched, watchedAfter: after.watched + (r.movies || []).filter((m) => m.is_watched).length,
             dupes: r.dupes || 0, splitInto: r.series.slice(1).map((s) => s.title),
+            lostSplits: r.series.slice(1).filter((s) => !s.id?.tvdb && !s.id?.imdb).map((s) => s.title),
             extractedMovies: (r.movies || []).map((m) => m.title), tmdbId: r.series[0].tmdb_id ?? null })
         } else {
           const r = await fixMovie(item); entries.push(r.movie); title = r.movie.title; note = r.note
@@ -1085,7 +1116,7 @@ $('#go').onclick = async () => {
         entries.push(item); title = item.title; note = 'error'
         const c = countEpisodes([item])
         report.push(f.kind === 'series'
-          ? { kind: 'series', file: f.name, title, note, extra: '', epBefore: c.episodes, epAfter: c.episodes, watchedBefore: c.watched, watchedAfter: c.watched, dupes: 0, splitInto: [], extractedMovies: [], tmdbId: null }
+          ? { kind: 'series', file: f.name, title, note, extra: '', epBefore: c.episodes, epAfter: c.episodes, watchedBefore: c.watched, watchedAfter: c.watched, dupes: 0, splitInto: [], lostSplits: [], extractedMovies: [], tmdbId: null }
           : { kind: 'movies', file: f.name, title, note, year: item.year ?? null, release: null, tmdbId: null })
       }
       notes[note] = (notes[note] || 0) + 1
