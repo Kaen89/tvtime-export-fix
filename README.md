@@ -3,8 +3,7 @@
 # 🩹 Fix TV Time Export
 
 A tiny, single-file web tool that realigns a **TV Time** export to the **TMDB**
-catalog — fixing broken episode numbering and adding air dates and TMDB IDs,
-**without ever losing a "watched"**.
+catalog — fixing broken episode numbering, **without ever losing a "watched"**.
 
 Everything runs in your browser. Your export files never leave your computer:
 the page talks only to TMDB, to look up shows and episodes. No server, no
@@ -39,7 +38,6 @@ For every series in the export it queries TMDB and:
   correctly matched TMDB series.
 - **Never invents anything** — if TMDB knows fewer episodes than your export,
   the series is kept exactly as it was.
-- **Adds data** — each episode's air date (`air_date`) and the show's TMDB ID.
 - **Respects specials** — special seasons and specials stay separate from the
   regular count.
 - **Extracts movie specials** — some "specials" are actually feature films
@@ -47,22 +45,25 @@ For every series in the export it queries TMDB and:
   on TMDB; these are pulled out and moved to the movies output instead of
   staying mixed in with the episodes.
 
-Movies get matched to TMDB too, gaining `tmdb_id` and a corrected
-`release_date`.
+Movies get matched to TMDB too, correcting the entry's ids and pulling in any
+film that was missing.
 
-Custom **lists** are fixed as well: every list item gains a `tmdb_id` (series
-resolved via their TVDB id, movies cross-referenced by `uuid` with the movies
-file, or looked up by name on TMDB), and when a lumped-together series gets
-split, the detached series are added to the list right after the original.
-Unresolved items are left untouched.
+Custom **lists** are fixed as well: when a lumped-together series gets split,
+the detached series are added to the list right after the original. Items are
+matched to TMDB (series via their TVDB id, movies cross-referenced by `uuid`
+with the movies file, or looked up by name) so the report can show what each
+one resolves to; unresolved items are left untouched.
 
 When the fix is done you get a **summary of every correction** right on the
 page, plus a downloadable **HTML report** with the full detail per series,
 movie and list — including a watched-episodes before/after count proving
-nothing was lost.
+nothing was lost, and the resolved TMDB IDs for every item.
 
-The output keeps the **same schema** as the original export (plus `tmdb_id` and
-`air_date`), so it stays importable anywhere.
+The output keeps **exactly the same schema** as the original export — no extra
+fields are added — so it stays importable anywhere. The enriched TMDB data
+(TMDB IDs, air dates, release dates) lives only in the report, since importers
+don't read those fields and, on lists, an unexpected field can prevent the list
+from importing.
 
 The interface is available in 8 languages (EN, IT, ES, FR, DE, PT, JA, ZH),
 auto-detected from your browser.

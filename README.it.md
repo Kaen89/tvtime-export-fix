@@ -3,8 +3,8 @@
 # 🩹 Fix TV Time Export
 
 Un piccolo tool web a file singolo che riallinea un export di **TV Time** al
-catalogo **TMDB** — correggendo la numerazione degli episodi e aggiungendo
-date di messa in onda e ID TMDB, **senza mai perdere un "visto"**.
+catalogo **TMDB** — correggendo la numerazione degli episodi, **senza mai
+perdere un "visto"**.
 
 Tutto gira nel tuo browser. I tuoi file di export non lasciano mai il
 computer: la pagina parla solo con TMDB, per cercare serie ed episodi. Nessun
@@ -40,8 +40,6 @@ Per ogni serie dell'export interroga TMDB e:
   abbinata correttamente su TMDB.
 - **Non inventa mai nulla** — se TMDB conosce meno episodi del tuo export, la
   serie viene mantenuta esattamente com'era.
-- **Aggiunge dati** — la data di messa in onda di ogni episodio (`air_date`) e
-  l'ID TMDB della serie.
 - **Rispetta gli special** — le stagioni special e gli special restano
   separati dal conteggio regolare.
 - **Estrae i film travestiti da special** — alcuni "special" sono in realtà
@@ -49,22 +47,25 @@ Per ogni serie dell'export interroga TMDB e:
   collegati alla serie su TMDB; vengono estratti e spostati nell'output dei
   film invece di restare mischiati con gli episodi.
 
-Anche i film vengono abbinati a TMDB, guadagnando `tmdb_id` e una
-`release_date` corretta.
+Anche i film vengono abbinati a TMDB, correggendo gli id della voce e
+recuperando eventuali film mancanti.
 
-Anche le **liste** custom vengono sistemate: ogni elemento guadagna un
-`tmdb_id` (serie risolte tramite il loro TVDB id, film incrociati per `uuid`
-col file dei film, o cercati per nome su TMDB), e quando una serie accorpata
-viene divisa, le serie staccate vengono aggiunte alla lista subito dopo
-l'originale. Gli elementi non risolti restano intatti.
+Anche le **liste** custom vengono sistemate: quando una serie accorpata viene
+divisa, le serie staccate vengono aggiunte alla lista subito dopo l'originale.
+Gli elementi vengono abbinati a TMDB (serie tramite il loro TVDB id, film
+incrociati per `uuid` col file dei film, o cercati per nome) così il report può
+mostrare a cosa corrisponde ciascuno; gli elementi non risolti restano intatti.
 
 A fix completato ottieni un **riepilogo di ogni correzione** direttamente in
 pagina, più un **report HTML** scaricabile con il dettaglio completo per
 serie, film e lista — incluso il conteggio prima/dopo degli episodi visti,
-a prova che nulla è andato perso.
+a prova che nulla è andato perso, e gli ID TMDB risolti per ogni elemento.
 
-L'output mantiene **lo stesso schema** dell'export originale (più `tmdb_id` e
-`air_date`), così resta importabile ovunque.
+L'output mantiene **esattamente lo stesso schema** dell'export originale —
+nessun campo aggiuntivo — così resta importabile ovunque. I dati TMDB
+arricchiti (ID TMDB, date di messa in onda, date di uscita) restano solo nel
+report, perché gli importatori non leggono quei campi e, sulle liste, un campo
+inatteso può impedire l'importazione della lista.
 
 L'interfaccia è disponibile in 8 lingue (EN, IT, ES, FR, DE, PT, JA, ZH),
 rilevate automaticamente dal browser.
